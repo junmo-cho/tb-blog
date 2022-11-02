@@ -1,11 +1,12 @@
 import PostContent from "../../components/PostContent";
+import "./style.scss";
 
 const Home = () => {
   return (
-    <div>
-      {/* <Navbar /> */}
+    <main>
+      <span className="posts-total">361 posts</span>
       <PostContent />
-    </div>
+    </main>
   );
 }
 

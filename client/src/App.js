@@ -5,6 +5,7 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import PostPage from './pages/PostPage';
 import WritePage from './pages/WritePage';
+import "./App.css";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -13,13 +14,13 @@ const GlobalStyle = createGlobalStyle`
 function App() {
   return (
     <>
-      <GlobalStyle />
+      {/* <GlobalStyle /> */}
       <BrowserRouter>
         <Routes>
           <Route path="/" element={ <Layout /> }>
             <Route index element={<Home />} />
             <Route path='/wirtePage' element={<WritePage />} />
-            <Route path='/:id' element={<PostPage />} />
+            <Route path='/post/:id' element={<PostPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

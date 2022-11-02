@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <header>
       <div className="header-container">
-        <h1>TechB</h1>
+        <h1>&lt; TechB /&gt;</h1>
         <nav>
           <ul>
             <li>
@@ -15,27 +15,27 @@ const Navbar = () => {
             </li>
             <li>
               <NavLink to="/" activeClassName="active">
-                All
+                Web
               </NavLink>
             </li>
             <li>
               <NavLink to="/" activeClassName="active">
-                All
+                Server
               </NavLink>
             </li>
             <li>
               <NavLink to="/" activeClassName="active">
-                All
+                Design
               </NavLink>
             </li>
             <li>
               <NavLink to="/" activeClassName="active">
-                All
+                Tool
               </NavLink>
             </li>
             <li>
               <NavLink to="/" activeClassName="active">
-                All
+                Etc
               </NavLink>
             </li>
           </ul>
