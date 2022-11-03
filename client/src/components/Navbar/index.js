@@ -9,32 +9,32 @@ const Navbar = () => {
         <nav>
           <ul>
             <li>
-              <NavLink to="/" activeClassName="active">
+              <NavLink to="/" activeclassname="active">
                 All
               </NavLink>
             </li>
             <li>
-              <NavLink to="/" activeClassName="active">
+              <NavLink to="/web" activeclassname="active">
                 Web
               </NavLink>
             </li>
             <li>
-              <NavLink to="/" activeClassName="active">
+              <NavLink to="/server" activeclassname="active">
                 Server
               </NavLink>
             </li>
             <li>
-              <NavLink to="/" activeClassName="active">
+              <NavLink to="/design" activeclassname="active">
                 Design
               </NavLink>
             </li>
             <li>
-              <NavLink to="/" activeClassName="active">
+              <NavLink to="/tool" activeclassname="active">
                 Tool
               </NavLink>
             </li>
             <li>
-              <NavLink to="/" activeClassName="active">
+              <NavLink to="/etc" activeclassname="active">
                 Etc
               </NavLink>
             </li>

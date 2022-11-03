@@ -4,6 +4,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-family: "NanumSquare";
+  font-weight: 500;
   // padding: 0 20px;
   box-sizing: border-box;
   margin-bottom: 40px;
@@ -24,18 +26,120 @@
   .post-category {
     display: inline-block;
     font-family: 'Roboto', sans-serif;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: bold;
     color: #B983FF;
     margin-bottom: 16px;
   }
   .post-title {
     font-size: 24px;
-    font-weight: bold;
+    font-weight: 900;
   }
   .post-subtitle {
     color: #474E68;
     margin-top: 16px;
+  }
+  .hashtags-container {
+    display: flex;
+    align-items: center;
+    margin-top: 28px;
+
+    li {
+      color: #6B728E;
+      padding: 5px 8px;
+      border: 1px solid #e2e2e2;
+      border-radius: 5px;
+      margin-right: 20px;
+    }
+  }
+  .more-btn {
+    float: left;
+    position: relative;
+    width: 162px;
+    font-family: "NanumSquare";
+    font-weight: 700;
+    font-size: 15px;
+    color: #B983FF;
+    letter-spacing: 2px;
+    white-space: nowrap;
+    background: #fff;
+    border: 1px solid #B983FF;
+    margin-top: 32px;
+    padding: 10px 15px 9px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: left;
+
+    em {
+      position: absolute;
+      height: 1px;
+      background: #B983FF;
+      width: 47%;
+      right: 14px;
+      top: 50%;
+      transform: scaleX(0.25);
+      -webkit-transform:scaleX(0.25);
+      transform-origin: center right;
+      transition: all 0.3s ease;
+      z-index: 1;
+    }
+  
+    span {
+      color: #B983FF;
+      display: inline-block;
+      transition: color 0.5s;
+      position: relative;
+      z-index: 1;
+    }
+
+    &:hover {
+      // background: #ffd700;
+      
+      span {
+        color: #fff;
+      }
+  
+      em {
+        background: #fff;
+        transform: scaleX(.39);
+        // transform: scaleY(.50);
+      }
+  
+      &:before {
+        width: 100%;
+        right: 0;
+        left: auto;
+      }
+  
+      &:after {
+        width: 100%;
+        left: 0;
+        right: auto;
+      }
+    }
+  
+    &:before, 
+    &:after {
+      content: '';
+      background: #B983FF;
+      height: 51%;
+      width: 0;
+      position: absolute;
+      transition: 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+      -webkit-transition:0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+    }
+  
+    &:before {
+      top: 0;
+      left: 0;
+      right: auto;
+    }
+  
+    &:after {
+      bottom: 0;
+      right: 0;
+      left: auto;
+    }
   }
 }
 
@@ -48,6 +152,100 @@
     text-align: center;
     color: #474E68;
     margin-bottom: 10px;
+  }
+}
+
+
+
+
+
+
+
+.flat-button {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 4px;
+  font-family: sans-serif;
+  text-decoration: none;
+  padding: 10px 18px;
+  border: 1px solid #ffd700;
+  background: #022c43;
+  margin-top: 25px;
+  float: left;
+  // animation: fadeIn 1s 1.8s backwards;
+  white-space: nowrap;
+  position: relative;
+  width: 106px;
+
+  em {
+    position: absolute;
+    height: 1px;
+    background: #ffd700;
+    width: 47%;
+    right: 13px;
+    top: 50%;
+    transform: scaleX(0.25);
+     -webkit-transform:scaleX(0.25);
+    transform-origin: center right;
+    transition: all 0.3s ease;
+    z-index: 1;
+  }
+
+  span {
+    color: #ffd700;
+    display: inline-block;
+    transition: color 0.5s;
+    position: relative;
+    z-index: 1;
+  }
+
+  &:hover {
+    // background: #ffd700;
+    
+    span {
+      color: #022c43;
+    }
+
+    em {
+      background: #022c43;
+      transform: scaleX(.47);
+      // transform: scaleY(.50);
+    }
+
+    &:before {
+      width: 100%;
+      right: 0;
+      left: auto;
+    }
+
+    &:after {
+      width: 100%;
+      left: 0;
+      right: auto;
+    }
+  }
+
+  &:before, 
+  &:after {
+    content: '';
+    background: #ffd700;
+    height: 51%;
+    width: 0;
+    position: absolute;
+    transition: 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+    -webkit-transition:0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  }
+
+  &:before {
+    top: 0;
+    left: 0;
+    right: auto;
+  }
+
+  &:after {
+    bottom: 0;
+    right: 0;
+    left: auto;
   }
 }
 
