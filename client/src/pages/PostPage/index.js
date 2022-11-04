@@ -10,14 +10,19 @@ const PostPage = () => {
   return (
     <div className="post-detail-container">
       <div className="post-header">
-        <span className="post-category">{ findPost.category }</span>
-        <h3 className="post-title">{ findPost.title }</h3>
-        <p className="post-subtitle">{ findPost.subTitle }</p>
-        <ul className="hashtags-container">
-          {findPost.hashtags.map((hashtag, hashIndex) => (
-            <li key={hashIndex}>{hashtag}</li>
-          ))}
-        </ul>
+        <div className="header-inner">
+          <span className="detail-category">{ findPost.category }</span>
+          <h3 className="detail-title">{ findPost.title }</h3>
+          <p className="detail-subtitle">{ findPost.subTitle }</p>
+          <ul className="hashtags-container">
+            {findPost.hashtags.map((hashtag, hashIndex) => (
+              <li key={hashIndex}>{hashtag}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <div className="post-content">
+        <p>{findPost.content}</p>
       </div>
     </div>
   );

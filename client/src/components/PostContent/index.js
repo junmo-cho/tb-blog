@@ -8,7 +8,7 @@ const PostContent = () => {
   return (
     <>
       {mainPosts.map((post) => (
-        <div key={post.id} className="post-container">
+        <div key={post.id} className="post-card">
           <div className="left-info">
             <span className="post-category">{ post.category }</span>
             <h3 className="post-title">{ post.title }</h3>
