@@ -1,0 +1,46 @@
+.write-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  font-family: "NanumSquare";
+  background: #fbfdfc;
+
+  .write-card {
+    width: 1000px;
+    height: 90%;
+    background: #fff;
+    border-radius: 14px;
+    padding: 32px 48px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+
+    label {
+      display: none;
+    }
+
+    input {
+      font-family: "NanumSquare";
+    }
+    input::placeholder {
+      color: rgb(202, 202, 202);
+    }
+
+    #title {
+      height: 48px;
+      font-size: 32px;
+      font-weight: 900;
+      border: 0;
+      outline: 0;
+    }
+
+    .title-line {
+      display: block;
+      width: 60px;
+      height: 5px;
+      background: rgb(78, 78, 78);
+      margin-top: 16px;
+      margin-bottom: 32px;
+    }
+  }
+}

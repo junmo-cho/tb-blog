@@ -48,21 +48,26 @@ export const addPost = {
   type: ADD_POST,
 }
 
-const dummyPost = {
-  id: 123123123,
+const dummyPost = (data) => ({
+  id: 4,
+  category: "Design",
+  title: data.title,
+  subTitle: data.subTitle,
+  content: data.content,
   User: {
-    id: 123123123,
-    nickname: "사용자"
+    id: 4,
+    nickname: data.user
   },
-  content: "더미 데이터입니다.",
-}
+  date: "2022-11-06",
+  hashtags: ["#toprank", "#angular", "#양방향바인딩"]
+});
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_POST:
       return {
         ...state,
-        mainPosts: [dummyPost, ...state.mainPosts],
+        mainPosts: [dummyPost(action.data), ...state.mainPosts],
         postAdded: true,
       };
     default:
