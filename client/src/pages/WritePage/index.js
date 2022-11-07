@@ -1,11 +1,19 @@
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { addPost } from "../../reducer";
+import { BsArrowBarLeft } from "react-icons/bs";
 import "./style.scss";
 
 const WrietPage = () => {
   const { register, handleSubmit, formState: { isSubmitting } } = useForm();
   const dispatch = useDispatch();
+  
+  const categoryList = ["Category", "Web", "Server", "Design", "Tool", "Etc"];
+  const [selected, setSelected] = useState("Category");
+
+  const handleSelect = (e) => {
+    setSelected(e.target.value);
+  }
 
   const onSubmit = (data) => {
     dispatch({
@@ -20,24 +28,37 @@ const WrietPage = () => {
     <div className="write-container">
       <div className="write-card">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div>
+          <div className="top-area">
+            <select name="category" onChange={handleSelect} value={selected} className={ selected === "Category" ? "dis" : "" }>
+              { categoryList.map((c) => (
+                <option key={c} value={c} disabled={ c === "Category" } hidden={ c === "Category" } className="others">{c}</option>
+              )) }
+            </select>
+            <span className="boundary-line"></span>
+            <div className="input-area">
+              <label htmlFor="user">작성자</label>
+              <input id="user" type="user" name="user" placeholder="작성자을 입력해 주세요." { ...register("user") } />
+            </div>
+          </div>
+          <div className="input-area">
             <label htmlFor="title">제목</label>
             <input id="title" type="title" name="title" placeholder="제목을 입력해 주세요." { ...register("title") } />
             <span className="title-line"></span>
           </div>
-          <div>
-            <label htmlFor="user">작성자</label>
-            <input id="user" type="user" name="user" placeholder="작성자" { ...register("user") } />
-          </div>
-          <div>
+          <div className="input-area">
             <label htmlFor="subTitle">부제목</label>
-            <input id="subTitle" type="subTitle" name="subTitle" placeholder="부제목" { ...register("subTitle") } />
+            <input id="subTitle" type="subTitle" name="subTitle" placeholder="부제목을 입력해 주세요." { ...register("subTitle") } />
           </div>
-          <div>
+          <div className="input-area content-area">
             <label htmlFor="content">본문</label>
-            <input id="content" type="content" name="content" placeholder="본문" { ...register("content") } />
+            <textarea id="content" type="content" name="content" placeholder="본문이외다" { ...register("content") } ></textarea>
           </div>
-          <button type="submit" disabled={isSubmitting}>완료</button>
+          <div className="btn-wrap">
+            <button type="button" className="exit">
+              <BsArrowBarLeft /> <span>나가기</span>
+              </button>
+            <button type="submit" disabled={isSubmitting} className="completed">완료</button>
+          </div>
         </form>
       </div>
     </div>
