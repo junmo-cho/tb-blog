@@ -1,8 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BsArrowBarLeft } from "react-icons/bs";
+import ReactQuill from 'react-quill';
+import EditorToolbar, { modules, formats } from "../../EditorToolbar";
+import 'react-quill/dist/quill.snow.css';
 import "./style.scss";
+import { ADD_POST_REQUEST } from "../../reducer";
+import { useNavigate } from "react-router-dom";
 
 const WrietPage = () => {
   const { register, handleSubmit, formState: { isSubmitting } } = useForm();
@@ -10,19 +15,36 @@ const WrietPage = () => {
   
   const categoryList = ["Category", "Web", "Server", "Design", "Tool", "Etc"];
   const [selected, setSelected] = useState("Category");
+  const [quillText, setQuillText] = useState("");
+
+  const { addPostDone } = useSelector(state => state);
+
+  const navigate = useNavigate();
 
   const handleSelect = (e) => {
     setSelected(e.target.value);
   }
 
-  const onSubmit = (data) => {
+  useEffect(() => {
+    if(addPostDone) {
+      console.log('asdasd124');
+      return navigate("/");
+    }
+  }, [addPostDone]);
+
+  const onSubmit = useCallback((data) => {
     dispatch({
-      type: 'ADD_POST',
-      data: { user: data.user, title: data.user, subTitle: data.subTitle, content: data.content }
+      type: ADD_POST_REQUEST,
+      data: { user: data.user, title: data.title, subTitle: data.subTitle, content: quillText }
     });
 
-    console.log(data);
-  }
+    // if(addPostDone) {
+    //   redirect("/");
+    // }
+
+    // console.log(data);
+    // console.log(quillText)
+  });
 
   return (
     <div className="write-container">
@@ -50,8 +72,10 @@ const WrietPage = () => {
             <input id="subTitle" type="subTitle" name="subTitle" placeholder="부제목을 입력해 주세요." { ...register("subTitle") } />
           </div>
           <div className="input-area content-area">
-            <label htmlFor="content">본문</label>
-            <textarea id="content" type="content" name="content" placeholder="본문이외다" { ...register("content") } ></textarea>
+            {/* <label htmlFor="content">본문</label>
+            <textarea id="content" type="content" name="content" placeholder="본문이외다" { ...register("content") } ></textarea> */}
+            <EditorToolbar />
+            <ReactQuill theme="snow" value={quillText} onChange={setQuillText} modules={modules} formats={formats} />
           </div>
           <div className="btn-wrap">
             <button type="button" className="exit">

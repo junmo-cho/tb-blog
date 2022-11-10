@@ -52,7 +52,7 @@
     .content-area {
       border-top: 1px solid #eeeeee;
       margin-top: 32px;
-      padding-top: 32px;
+      padding-top: 21px;
 
       textarea {
         width: 100%;
@@ -131,4 +131,15 @@
       }
     }
   }
+}
+
+.ql-toolbar.ql-snow {
+  border: 0;
+  padding-bottom: 24px;
+  // border-bottom: 1px solid #eeeeee;
+}
+
+.ql-container.ql-snow {
+  height: 61vh;
+  border: 0;
 }
