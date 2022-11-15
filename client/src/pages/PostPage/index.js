@@ -14,11 +14,11 @@ const PostPage = () => {
           <span className="detail-category">{ findPost.category }</span>
           <h3 className="detail-title">{ findPost.title }</h3>
           <p className="detail-subtitle">{ findPost.subTitle }</p>
-          <ul className="hashtags-container">
+          {/* <ul className="hashtags-container">
             {findPost.hashtags.map((hashtag, hashIndex) => (
               <li key={hashIndex}>{hashtag}</li>
             ))}
-          </ul>
+          </ul> */}
         </div>
       </div>
       <div className="post-content">

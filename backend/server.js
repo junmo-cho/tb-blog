@@ -1,8 +1,26 @@
 const express = require('express');
-const { post } = require('./routes/postRoutes');
+const cors = require('cors');
+const db = require('./models');
+const postRouter = require('./routes/postRoutes');
 
 const app = express();
 
-app.use('/post', post);
+db.sequelize.sync()
+  .then(() => {
+    console.log('db 연결 성공');
+  })
+  .catch(console.error);
+
+app.use(cors({
+  origin: true,
+}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.get('/', (req, res) => {
+  res.send('hello express');
+});
+
+app.use('/post', postRouter);
 
 app.listen(8080, () => console.log(`Server runnig on 8080`));

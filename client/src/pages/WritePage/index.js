@@ -35,7 +35,7 @@ const WrietPage = () => {
   const onSubmit = useCallback((data) => {
     dispatch({
       type: ADD_POST_REQUEST,
-      data: { user: data.user, title: data.title, subTitle: data.subTitle, content: quillText }
+      data: { category: selected, user: data.user, title: data.title, subTitle: data.subTitle, content: quillText }
     });
 
     // if(addPostDone) {

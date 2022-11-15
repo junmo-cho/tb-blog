@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from "react-router-dom";
-import { REMOVE_POST_REQUEST } from '../../reducer';
+import { Link, useNavigate } from "react-router-dom";
+import { LOAD_POST_REQUEST, REMOVE_POST_REQUEST } from '../../reducer';
 import ReactLoading, { bars, blank } from 'react-loading';
 import { AiOutlineDelete } from 'react-icons/ai';
 import "./style.scss";
@@ -10,27 +10,26 @@ const PostContent = () => {
   const { mainPosts } = useSelector(state => state);
   const dispatch = useDispatch();
   const { removePostLoading } = useSelector(state => state);
+  const { loadPostLoading } = useSelector(state => state);
+  const { removePostDone } = useSelector(state => state);
+  const { hasMorePosts } = useSelector(state => state);
 
   const onRemovePost = (postId) => {
     dispatch({
-      type: REMOVE_POST_REQUEST,
+      type: REMOVE_POST_REQUEST, 
       data: postId
     });
-
-    console.log(postId);
   };
 
-  // useEffect(() => {
-  //   if(removePostLoading) {
-  //     console.log("remove");
-  //     return (
-  //       <div>
-  //         {/* <ReactLoading type={bars} color="#fff" height={667} width={375} /> */}
-  //         Loading...
-  //       </div>
-  //     );
-  //   }
-  // }, [removePostLoading]);
+  useEffect(() => {
+    if(hasMorePosts && !loadPostLoading) {
+      const lastId = mainPosts[mainPosts.length - 1]?.id;
+      dispatch({
+        type: LOAD_POST_REQUEST,
+        lastId,
+      });
+    }
+  }, []);
 
   return (
     <>
@@ -45,11 +44,11 @@ const PostContent = () => {
             <span className="post-category">{ post.category }</span>
             <h3 className="post-title">{ post.title }</h3>
             <p className="post-subtitle">{ post.subTitle }</p>
-            <ul className="hashtags-container">
+            {/* <ul className="hashtags-container">
               {post.hashtags.map((hashtag, hashIndex) => (
                 <li key={hashIndex}>{hashtag}</li>
               ))}
-            </ul>
+            </ul> */}
             <Link to={`/post/${post.id}`}>
               <button className="more-btn">
                 <em></em>
@@ -61,7 +60,7 @@ const PostContent = () => {
             <button className='delete-btn' onClick={() => { onRemovePost(post.id) }}>
               <AiOutlineDelete />
             </button>
-            <span className="user-name">{ post.User.nickname }</span>
+            <span className="user-name">{ post.user }</span>
             <span className="date-created">{ post.date }</span>
           </div>
         </div>
