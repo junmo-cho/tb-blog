@@ -46,10 +46,12 @@ export const initialState = {
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
+export const ADD_POST_STATE_RESET = 'ADD_POST_STATE_RESET';
 
 export const REMOVE_POST_REQUEST = 'REMOVE_POST_REQUEST';
 export const REMOVE_POST_SUCCESS = 'REMOVE_POST_SUCCESS';
 export const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
+export const REMOVE_POST_RESET = 'REMOVE_POST_RESET';
 
 export const LOAD_POST_REQUEST = 'LOAD_POST_REQUEST';
 export const LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS';
@@ -91,6 +93,12 @@ const reducer = (state = initialState, action) => {
         addPostLoading: false,
         addPostError: action.error,
       };
+    case ADD_POST_STATE_RESET:
+      return {
+        ...state,
+        addPostLoading: false,
+        addPostDone: false,
+      };
     case REMOVE_POST_REQUEST:
       return {
         ...state,
@@ -111,6 +119,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         removePostLoading: false,
         removePostError: action.error,
+      };
+    case REMOVE_POST_RESET:
+      return {
+        ...state,
+        removePostDone: false,
+        mainPosts: [],
       };
     case LOAD_POST_REQUEST:
       return {

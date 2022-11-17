@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from "react-router-dom";
-import { LOAD_POST_REQUEST, REMOVE_POST_REQUEST } from '../../reducer';
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { LOAD_POST_REQUEST, REMOVE_POST_REQUEST, REMOVE_POST_RESET } from '../../reducer';
 import ReactLoading, { bars, blank } from 'react-loading';
 import { AiOutlineDelete } from 'react-icons/ai';
 import "./style.scss";
@@ -10,9 +10,9 @@ const PostContent = () => {
   const { mainPosts } = useSelector(state => state);
   const dispatch = useDispatch();
   const { removePostLoading } = useSelector(state => state);
-  const { loadPostLoading } = useSelector(state => state);
-  const { removePostDone } = useSelector(state => state);
+  const { loadPostLoading, removePostDone } = useSelector(state => state);
   const { hasMorePosts } = useSelector(state => state);
+  const navigator = useNavigate();
 
   const onRemovePost = (postId) => {
     dispatch({
@@ -30,6 +30,17 @@ const PostContent = () => {
       });
     }
   }, []);
+
+  useEffect(() => {
+    if(removePostDone) {
+      dispatch({
+        type: REMOVE_POST_RESET,
+      });
+      dispatch({
+        type: LOAD_POST_REQUEST,
+      });
+    }
+  }, [removePostDone]);
 
   return (
     <>

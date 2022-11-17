@@ -1,20 +1,56 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import "./style.scss";
 
+const navData = [
+  {
+    id: 0,
+    category: "All",
+  },
+  {
+    id: 1,
+    category: "Web",
+  },
+  {
+    id: 2,
+    category: "Server"
+  },
+  {
+    id: 3,
+    category: "Design"
+  },
+  {
+    id: 4,
+    category: "Tool"
+  },
+  {
+    id: 5,
+    category: "Etc"
+  },
+];
+
 const Navbar = () => {
+  const location = useLocation(); 
+  const params = new URLSearchParams(location.search)
+  const categoryParams = params.get("category")
+
   return (
     <header>
       <div className="header-container">
         <h1>&lt; TechB /&gt;</h1>
         <nav>
           <ul>
-            <li>
+            { navData.map((el, i) => (
+              <li key={el.id}>
+                <Link to={`/?category=${el.category}`} className={ el.category === categoryParams ? "active" : null }>{el.category}</Link>
+              </li>
+            )) }
+            {/* <li>
               <NavLink to="/" activeclassname="active">
                 All
               </NavLink>
             </li>
             <li>
-              <NavLink to="/web" activeclassname="active">
+              <NavLink to="/?category=web" activeclassname="active">
                 Web
               </NavLink>
             </li>
@@ -37,7 +73,7 @@ const Navbar = () => {
               <NavLink to="/etc" activeclassname="active">
                 Etc
               </NavLink>
-            </li>
+            </li> */}
           </ul>
         </nav>
       </div>

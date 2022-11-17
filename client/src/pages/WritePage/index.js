@@ -6,7 +6,7 @@ import ReactQuill from 'react-quill';
 import EditorToolbar, { modules, formats } from "../../EditorToolbar";
 import 'react-quill/dist/quill.snow.css';
 import "./style.scss";
-import { ADD_POST_REQUEST } from "../../reducer";
+import { ADD_POST_REQUEST, ADD_POST_RESET, ADD_POST_STATE_RESET } from "../../reducer";
 import { useNavigate } from "react-router-dom";
 
 const WrietPage = () => {
@@ -24,15 +24,17 @@ const WrietPage = () => {
   const handleSelect = (e) => {
     setSelected(e.target.value);
   }
-
   useEffect(() => {
     if(addPostDone) {
       console.log('asdasd124');
-      return navigate("/");
+      dispatch({
+        type: ADD_POST_STATE_RESET
+      });
+      return navigate("/", { replace: true });
     }
   }, [addPostDone]);
 
-  const onSubmit = useCallback((data) => {
+  const onSubmit = (data) => {
     dispatch({
       type: ADD_POST_REQUEST,
       data: { category: selected, user: data.user, title: data.title, subTitle: data.subTitle, content: quillText }
@@ -44,7 +46,7 @@ const WrietPage = () => {
 
     // console.log(data);
     // console.log(quillText)
-  });
+  };
 
   return (
     <div className="write-container">
