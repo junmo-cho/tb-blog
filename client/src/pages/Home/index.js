@@ -11,12 +11,15 @@ const Home = () => {
   const params = new URLSearchParams(location.search)
   const categoryParams = params.get("category")
 
-  console.log(categoryParams);
+  // console.log(categoryParams);
+
+  const categoryPosts = mainPosts.filter((c) => c.category === categoryParams);
+  // console.log(Boolean(categoryPosts.length !== 0), categoryPosts);
 
   return (
     <main className="post-container">
       <div className="post-top-info">
-        <span className="posts-total">{ mainPosts.length } posts</span>
+        <span className="posts-total">{ categoryPosts.length !== 0 ? categoryPosts.length : mainPosts.length } posts</span>
         <Link to="/writePage">
           <button className="create-btn">
             <HiPencil />
@@ -24,7 +27,7 @@ const Home = () => {
           </button>
         </Link>
       </div>
-      <PostContent />
+      <PostContent categoryPosts={categoryPosts} />
     </main>
   );
 }

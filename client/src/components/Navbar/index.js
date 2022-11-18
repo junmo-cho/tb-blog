@@ -1,4 +1,5 @@
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import "./style.scss";
 
 const navData = [
@@ -30,8 +31,14 @@ const navData = [
 
 const Navbar = () => {
   const location = useLocation(); 
-  const params = new URLSearchParams(location.search)
-  const categoryParams = params.get("category")
+  const params = new URLSearchParams(location.search);
+  const categoryParams = params.get("category");
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    return navigate("/?category=All", { replace: true });
+  }, []);
 
   return (
     <header>
