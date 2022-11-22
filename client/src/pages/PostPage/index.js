@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import 'react-quill/dist/quill.snow.css';
 import "./style.scss";
 
 const PostPage = () => {
@@ -22,7 +23,13 @@ const PostPage = () => {
         </div>
       </div>
       <div className="post-content">
-        <p>{findPost.content}</p>
+        <div className="quill">
+          <div className="ql-container ql-snow">
+            <div className="ql-editor ql-post-contents">
+              <div dangerouslySetInnerHTML={{ __html:findPost.content }}></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

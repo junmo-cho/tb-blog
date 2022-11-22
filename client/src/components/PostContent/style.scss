@@ -1,9 +1,7 @@
 .post-card {
   position: relative;
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  // align-items: center;
   font-family: "NanumSquare";
   font-weight: 500;
   // padding: 0 20px;
@@ -18,6 +16,11 @@
     bottom: 0;
     width: 100%;
     border-bottom: 1px solid #e2e2e2;
+  }
+
+  .post-card-contents {
+    display: flex;
+    justify-content: space-between;
   }
 }
 
@@ -146,6 +149,8 @@
 .right-info {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
 
   span {
     display: inline-block;
@@ -154,14 +159,57 @@
     margin-bottom: 10px;
   }
 
-  .delete-btn {
-    background: none;
-    border: 0;
-    outline: 0;
-    font-size: 24px;
-    color: #E97777;
-    margin-bottom: 48px;
-    cursor: pointer;
+  .btn-wrap {
+    button {
+      background: none;
+      border: 0;
+      outline: 0;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .delete-btn {
+      color: #E97777;
+    }
+
+    .comment-btn {
+      color: #779fe9;
+    }
+  }
+}
+
+.comment-area {
+  position: relative;
+  width: 100%;
+  margin-top: 16px;
+  overflow: hidden;
+
+  .input-area {
+
+    textarea {
+      width: 100%;
+      max-width: 100%;
+      min-height: 100px;
+      box-sizing: border-box;
+      resize: vertical;
+      outline: 0;
+      border: 1px solid rgb(180, 180, 180);
+      border-radius: 5px;
+      padding: 8px;
+    }
+
+    .comment-done-btn {
+      float: right;
+      background: none;
+      border: 0;
+      outline: 0;
+    }
+
+    &::after {
+      content: "";
+      display: block;
+      clear: both;
+    }
   }
 }
 

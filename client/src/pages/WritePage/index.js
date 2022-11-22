@@ -5,6 +5,11 @@ import { BsArrowBarLeft } from "react-icons/bs";
 import ReactQuill from 'react-quill';
 import EditorToolbar, { modules, formats } from "../../EditorToolbar";
 import 'react-quill/dist/quill.snow.css';
+import 'react-quill/dist/quill.core.css'
+import 'react-quill/dist/quill.bubble.css'
+// import 'highlight.js/styles/darcula.css'
+// import "highlight.js/styles/github.css";
+import "highlight.js/styles/atom-one-dark.css";
 import "./style.scss";
 import { ADD_POST_REQUEST, ADD_POST_RESET, ADD_POST_STATE_RESET } from "../../reducer";
 import { useNavigate } from "react-router-dom";

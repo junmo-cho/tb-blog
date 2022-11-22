@@ -1,4 +1,5 @@
 import { Quill } from "react-quill";
+import hljs from 'highlight.js'
 
 // Custom Undo button icon component for Quill editor. You can import it directly
 // from 'quill/assets/icons/undo.svg' but I found that a number of loaders do not
@@ -49,8 +50,15 @@ Font.whitelist = [
 ];
 Quill.register(Font, true);
 
+hljs.configure({
+  languages: ['javascript', 'ruby', 'python', 'rust'],
+});
+
 // Modules object for setting up the Quill editor
 export const modules = {
+  syntax: {
+    highlight: text => hljs.highlightAuto(text).value,
+  },
   toolbar: {
     container: "#toolbar",
     handlers: {
