@@ -3,6 +3,7 @@ import { LOAD_POST_REQUEST, REMOVE_POST_REQUEST, REMOVE_POST_RESET } from '../..
 import { AiOutlineComment, AiOutlineDelete } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import CommentForm from '../CommentForm';
 
 const PostCard = ({ postType }) => {
   const dispatch = useDispatch();
@@ -62,30 +63,7 @@ const PostCard = ({ postType }) => {
           </div>
         </div>
         { commentOpen ? (
-          <div className="comment-area">
-            <div className="input-area">
-              <form>
-                <textarea></textarea>
-                <button type="submit" className="comment-done-btn">완료</button>
-              </form>
-            </div>
-            <div className="comment-list-area">
-              <ul>
-                <li className="comment-card">
-                  <span className="comment-user">사용자1</span>
-                  <div className="comment-contents">내용</div>
-                </li>
-                <li className="comment-card">
-                  <span className="comment-user">사용자2</span>
-                  <div className="comment-contents">내용</div>
-                </li>
-                <li className="comment-card">
-                  <span className="comment-user">사용자3</span>
-                  <div className="comment-contents">내용</div>
-                </li>
-              </ul>
-            </div>
-          </div>
+          <CommentForm post={post} />
         ) : null }
       </div>
     )) }

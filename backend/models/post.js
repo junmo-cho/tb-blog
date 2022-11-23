@@ -34,7 +34,9 @@ module.exports = (sequelize, DataTypes) => {
     collate: 'utf8mb4_general_ci'
   });
 
-  Post.associate = (db) => {};
+  Post.associate = (db) => {
+    db.Post.hasMany(db.Comment);
+  };
 
   return Post;
 };

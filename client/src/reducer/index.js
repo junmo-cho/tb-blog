@@ -34,6 +34,9 @@ export const initialState = {
   addPostLoading: false,
   addPostDone: false,
   addPostError: null,
+  addCommentLoading: false,
+  addCommentDone: false,
+  addCommentError: null,
   removePostLoading: false,
   removePostDone: false,
   removePostError: null,
@@ -57,6 +60,10 @@ export const LOAD_POST_REQUEST = 'LOAD_POST_REQUEST';
 export const LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS';
 export const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE';
 
+export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
+export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
+export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
+
 // const dummyPost = (data) => ({
 //   id: 4,
 //   category: "Design",
@@ -70,6 +77,11 @@ export const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE';
 //   date: "2022-11-06",
 //   hashtags: ["#toprank", "#angular", "#양방향바인딩"]
 // });
+
+const dummyComment = (data) => ({
+  id: 1,
+  content: data,
+});
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -147,6 +159,34 @@ const reducer = (state = initialState, action) => {
         ...state,
         loadPostLoading: false,
         loadPostError: action.error,
+      };
+    case ADD_COMMENT_REQUEST:
+      return {
+        ...state,
+        addCommentLoading: true,
+        addCommentDone: false,
+        addCommentError: null,
+      };
+    case ADD_COMMENT_SUCCESS:
+      const postIndex = state.mainPosts.findIndex((v) => v.id === action.data.postId);
+      const post = { ...state.mainPosts[postIndex] };
+      post.Comments = [dummyComment(action.data.content), ...post.Comments];
+      const mainPosts = [...state.mainPosts];
+      mainPosts[postIndex] = post;
+
+      console.log(mainPosts);
+
+      return {
+        ...state,
+        mainPosts,
+        addCommentLoading: false,
+        addCommentDone: true,
+      };
+    case ADD_COMMENT_FAILURE:
+      return {
+        ...state,
+        loadPostLoading: false,
+        addCommentError: action.error,
       };
     default:
       return state;
