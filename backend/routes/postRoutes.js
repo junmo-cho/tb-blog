@@ -1,12 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const { Post } = require('../models');
+const { Post, Comment } = require('../models');
 
 router.get('/', async (req, res, next) => {
   try {
     const posts = await Post.findAll({
       limit: 10,
       order: [['createdAt', 'DESC']],
+      include: [{
+        model: Comment,
+      }],
     });
 
     res.status(200).json(posts);
@@ -28,7 +31,30 @@ router.post('/', async (req, res, next) => {
       user: req.body.user,
     });
 
-    res.status(201).json(post);
+    const fullPost = await Post.findOne({
+      where: { id: post.id },
+      include: [{
+        model: Comment,
+      }],
+    });
+
+    res.status(201).json(fullPost);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({ message: `Server Error ${error}` });
+    next(error);
+  }
+});
+
+router.post('/:postId/comment', async (req, res, next) => {
+  try {
+    const comment = await Comment.create({
+      content: req.body.content,
+      PostId: parseInt(req.params.postId)
+    });
+
+    res.status(201).json(comment);
   } catch (error) {
     console.error(error);
 

@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { ADD_COMMENT_REQUEST } from "../../reducer";
 import "./style.scss";
 
@@ -7,9 +7,9 @@ const CommentForm = ({ post }) => {
   const dispatch = useDispatch();
   const [commentText, setCommentText] = useState("");
 
-  const onChangeComment = (e) => {
+  const onChangeComment = useCallback((e) => {
     setCommentText(e.target.value);
-  }
+  }, [commentText]);
 
   const onSubmitComment = (e) => {
     e.preventDefault();
@@ -30,18 +30,12 @@ const CommentForm = ({ post }) => {
       </div>
       <div className="comment-list-area">
         <ul>
-          <li className="comment-card">
-            <span className="comment-user">사용자1</span>
-            <div className="comment-contents">내용</div>
-          </li>
-          <li className="comment-card">
-            <span className="comment-user">사용자2</span>
-            <div className="comment-contents">내용</div>
-          </li>
-          <li className="comment-card">
-            <span className="comment-user">사용자3</span>
-            <div className="comment-contents">내용</div>
-          </li>
+          { post.Comments.map((comment) => (
+            <li key={comment.id} className="comment-card">
+              <span className="comment-user">{}</span>
+              <div className="comment-contents">{comment.content}</div>
+            </li>
+          )) }
         </ul>
       </div>
     </div>
