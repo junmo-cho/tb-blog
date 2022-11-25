@@ -170,7 +170,7 @@ const reducer = (state = initialState, action) => {
     case ADD_COMMENT_SUCCESS:
       const postIndex = state.mainPosts.findIndex((v) => v.id === action.data.PostId);
       const post = { ...state.mainPosts[postIndex] };
-      post.Comments = [action.data.content, ...post.Comments];
+      post.Comments = [action.data, ...post.Comments];
       const mainPosts = [...state.mainPosts];
       mainPosts[postIndex] = post;
 

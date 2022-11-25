@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import PostPage from './pages/PostPage';
 import WritePage from './pages/WritePage';
 import "./App.css";
+import Login from "./pages/Login";
 
 // const GlobalStyle = createGlobalStyle`
 //   ${reset}
@@ -17,6 +18,7 @@ function App() {
       {/* <GlobalStyle /> */}
       <BrowserRouter>
         <Routes>
+          <Route path="/login" element={ <Login /> } />
           <Route path="/" element={ <Layout /> }>
             <Route index element={<Home />} />
             <Route path='/post/:id' element={<PostPage />} />
