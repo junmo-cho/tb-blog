@@ -1,17 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import { LOAD_POST_REQUEST, REMOVE_POST_REQUEST, REMOVE_POST_RESET } from '../../reducer';
+import { LOAD_POST_REQUEST, REMOVE_POST_REQUEST, REMOVE_POST_RESET } from '../../reducer/post';
 import ReactLoading, { bars, blank } from 'react-loading';
 import "./style.scss";
 import PostCard from '../PostCard';
 
 const PostContent = ({ categoryPosts }) => {
-  const { mainPosts } = useSelector(state => state);
+  const { mainPosts } = useSelector(state => state.post);
   const dispatch = useDispatch();
-  const { removePostLoading } = useSelector(state => state);
-  const { loadPostLoading, removePostDone } = useSelector(state => state);
-  const { hasMorePosts } = useSelector(state => state);
+  const { loadPostLoading, removePostDone, removePostLoading } = useSelector(state => state.post);
+  const { hasMorePosts } = useSelector(state => state.post);
 
   useEffect(() => {
     if(hasMorePosts && !loadPostLoading) {

@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { REMOVE_POST_REQUEST } from "../../reducer";
+import { REMOVE_POST_REQUEST } from "../../reducer/post";
 import { AiOutlineComment, AiOutlineDelete } from 'react-icons/ai';
 import CommentForm from "../CommentForm";
 

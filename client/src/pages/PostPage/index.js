@@ -5,7 +5,7 @@ import "./style.scss";
 
 const PostPage = () => {
   const { id } = useParams();
-  const { mainPosts } = useSelector(state => state);
+  const { mainPosts } = useSelector(state => state.post);
   const findPost = mainPosts.find(f => f.id === Number(id));
 
   return (

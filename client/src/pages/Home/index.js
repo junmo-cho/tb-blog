@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const Home = () => {
-  const { mainPosts } = useSelector(state => state);
+  const { mainPosts } = useSelector(state => state.post);
 
   const location = useLocation(); 
   const params = new URLSearchParams(location.search)

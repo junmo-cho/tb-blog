@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ADD_COMMENT_REQUEST } from "../../reducer";
+import { ADD_COMMENT_REQUEST } from "../../reducer/post";
 import "./style.scss";
 
 const CommentForm = ({ post }) => {

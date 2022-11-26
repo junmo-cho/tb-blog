@@ -11,7 +11,7 @@ import 'react-quill/dist/quill.bubble.css'
 // import "highlight.js/styles/github.css";
 import "highlight.js/styles/atom-one-dark.css";
 import "./style.scss";
-import { ADD_POST_REQUEST, ADD_POST_RESET, ADD_POST_STATE_RESET } from "../../reducer";
+import { ADD_POST_REQUEST, ADD_POST_RESET, ADD_POST_STATE_RESET } from "../../reducer/post";
 import { useNavigate } from "react-router-dom";
 
 const WrietPage = () => {
@@ -22,7 +22,7 @@ const WrietPage = () => {
   const [selected, setSelected] = useState("Category");
   const [quillText, setQuillText] = useState("");
 
-  const { addPostDone } = useSelector(state => state);
+  const { addPostDone } = useSelector(state => state.post);
 
   const navigate = useNavigate();
 
