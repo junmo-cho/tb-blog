@@ -7,6 +7,7 @@ import PostPage from './pages/PostPage';
 import WritePage from './pages/WritePage';
 import "./App.css";
 import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
 
 // const GlobalStyle = createGlobalStyle`
 //   ${reset}
@@ -18,6 +19,7 @@ function App() {
       {/* <GlobalStyle /> */}
       <BrowserRouter>
         <Routes>
+          <Route path="/signup" element={ <SignUp /> } />
           <Route path="/login" element={ <Login /> } />
           <Route path="/" element={ <Layout /> }>
             <Route index element={<Home />} />

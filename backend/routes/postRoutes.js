@@ -31,7 +31,7 @@ router.post('/', async (req, res, next) => {
       title: req.body.title,
       subTitle: req.body.subTitle,
       content: req.body.content,
-      user: req.body.user,
+      // user: req.body.user,
     });
 
     const fullPost = await Post.findOne({

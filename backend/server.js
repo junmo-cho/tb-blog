@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const db = require('./models');
+const userRouter = require('./routes/userRouter');
 const postRouter = require('./routes/postRoutes');
 
 const app = express();
@@ -21,6 +22,7 @@ app.get('/', (req, res) => {
   res.send('hello express');
 });
 
+app.use('/user', userRouter);
 app.use('/post', postRouter);
 
 app.listen(8080, () => console.log(`Server runnig on 8080`));

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { register, handleSubmit, formState: { isSubmitting } } = useForm();
@@ -32,6 +32,7 @@ const Login = () => {
           </div>
           <div>
             <button type="submit" disabled={isSubmitting}>로그인</button>
+            <Link to="/signup">회원가입</Link>
           </div>
         </form>
       </div>

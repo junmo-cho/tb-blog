@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Comment.associate = (db) => {
+    db.Comment.belongsTo(db.User);
     db.Comment.belongsTo(db.Post);
   };
 

@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 
 import post from './post';
+import user from './user';
 
 const rootReducer = combineReducers({
   index: (state = {}, action) => {
@@ -9,7 +10,7 @@ const rootReducer = combineReducers({
         return state;
     }
   },
-  // user,
+  user,
   post,
 });
 

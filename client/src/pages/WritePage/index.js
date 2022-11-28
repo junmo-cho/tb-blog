@@ -31,7 +31,6 @@ const WrietPage = () => {
   }
   useEffect(() => {
     if(addPostDone) {
-      console.log('asdasd124');
       dispatch({
         type: ADD_POST_STATE_RESET
       });
@@ -42,7 +41,7 @@ const WrietPage = () => {
   const onSubmit = (data) => {
     dispatch({
       type: ADD_POST_REQUEST,
-      data: { category: selected, user: data.user, title: data.title, subTitle: data.subTitle, content: quillText }
+      data: { category: selected, title: data.title, subTitle: data.subTitle, content: quillText }
     });
 
     // if(addPostDone) {

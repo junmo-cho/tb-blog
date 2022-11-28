@@ -17,10 +17,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: false
     },
-    user: {
-      type: DataTypes.STRING(10),
-      allowNull: false
-    },
+    // user: {
+    //   type: DataTypes.STRING(10),
+    //   allowNull: false
+    // },
     // date: {
     //   type: DataTypes.DATE,
     //   allowNull: false
@@ -36,6 +36,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Post.associate = (db) => {
+    db.Post.belongsTo(db.User);
     db.Post.hasMany(db.Comment);
   };
 
