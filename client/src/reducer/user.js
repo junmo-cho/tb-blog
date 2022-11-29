@@ -5,6 +5,7 @@ export const initialState = {
   loginLoading: false,
   loginDone: false,
   loginError: null,
+  me: null,
 };
 
 export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
@@ -42,6 +43,26 @@ const reducer = (state = initialState, action) => {
         ...state,
         signUpLoading: false,
         signUpDone: false,
+      };
+    case LOG_IN_REQUEST:
+      return {
+        ...state,
+        loginLoading: true,
+        loginDone: false,
+        loginError: null,
+      };
+    case LOG_IN_SUCCESS:
+      return {
+        ...state,
+        loginLoading: false,
+        loginDone: true,
+        me: action.data,
+      };
+    case LOG_IN_FAILURE:
+      return {
+        ...state,
+        loginLoading: false,
+        loginError: action.error,
       };
     default:
       return state;

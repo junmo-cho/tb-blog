@@ -1,15 +1,22 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import { LOG_IN_REQUEST } from "../../reducer/user";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
   const { register, handleSubmit, formState: { isSubmitting } } = useForm();
   const [login, setLogin] = useState(false);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const onSubmitLogin = (data) => {
     setLogin(true);
     console.log({ email: data.email, password: data.password });
+    dispatch({
+      type: LOG_IN_REQUEST,
+      data: { email: data.email, password: data.password }
+    });
   }
 
   useEffect(() => {

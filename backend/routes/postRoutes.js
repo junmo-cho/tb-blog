@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Post, Comment } = require('../models');
+const { Post, Comment, User } = require('../models');
 
 router.get('/', async (req, res, next) => {
   try {
@@ -12,6 +12,13 @@ router.get('/', async (req, res, next) => {
       ],
       include: [{
         model: Comment,
+        include: [{
+          model: User,
+          attributes: ['id', 'nickname'],
+        }]
+      }, {
+        model: User,
+        attributes: ['id', 'nickname'],
       }],
     });
 
@@ -38,6 +45,13 @@ router.post('/', async (req, res, next) => {
       where: { id: post.id },
       include: [{
         model: Comment,
+        include: [{
+          model: User,
+          attributes: ['id', 'nickname'],
+        }]
+      }, {
+        model: User,
+        attributes: ['id', 'nickname'],
       }],
     });
 
