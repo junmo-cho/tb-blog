@@ -1,0 +1,111 @@
+.signin-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background: #f3f3f4;
+
+  .signin-box {
+    position: relative;
+    width: 1100px;
+    height: 55vh;
+    background: #fff;
+    border-radius: 16px;
+
+    .moving-form {
+      display: flex;
+      // justify-content: center;
+      align-items: center;
+      width: 500px;
+      height: 100%;
+      padding: 0 54px;
+      transform: translateX(480px);
+
+      &.moving-form-active {
+        animation: movingForm 1s linear forwards;
+      }
+    }
+
+    .moving-box {
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 500px;
+      height: 100%;
+      background: #B983FF;
+      opacity: 0.7;
+      border-top-left-radius: 15px;
+      border-bottom-left-radius: 15px;
+
+      &.moving {
+        animation: moving 1s linear forwards;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+      }
+
+      .moving-box-title {
+        font-family: "Roboto";
+        font-size: 32px;
+        font-weight: 900;
+        color: #fff;
+        text-align: center;
+        letter-spacing: 1px;
+        margin-bottom: 32px;
+      }
+
+      .moving-box-description {
+        font-family: "NanumSquare";
+        color: #fff;
+        margin-bottom: 48px;
+      }
+
+      .signup-link-btn {
+        outline: none;
+        border: 1px solid #fff;
+        padding: 13px 32px;
+        background: none;
+        border-radius: 25px;
+        color: #fff;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@keyframes moving {
+  0% {
+    width: 500px;
+    transform: translateX(0px);
+  }
+  50% {
+    width: 650px;
+    transform: translateX(200px);
+  }
+  100% {
+    width: 500px;
+    transform: translateX(600px);
+  }
+}
+
+@keyframes movingForm {
+  0% {
+    // width: 500px;
+    transform: translateX(600px);
+  }
+  50% {
+    // width: 650px;
+    transform: translateX(200px);
+  }
+  100% {
+    // width: 500px;
+    transform: translateX(0);
+  }
+} 
