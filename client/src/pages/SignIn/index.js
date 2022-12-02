@@ -4,15 +4,24 @@ import SignUp from "../../components/SignUp";
 import './style.scss';
 
 const SignIn = () => {
-  const [formChange, setFormChange] = useState(false);
-  const [movingClass, setMovingClass] = useState('moving');
-  const [movingFormClass, setMovingFormClass] = useState('moving-form-active');
+  const [formChange, setFormChange] = useState(true);
+  const [movingClass, setMovingClass] = useState('');
+  const [movingFormClass, setMovingFormClass] = useState('');
 
   const onClickChange = () => {
     if(formChange) {
+      setMovingClass('moving');
+      setMovingFormClass('moving-form-active');
+    }else{
+      setMovingClass('starting');
+      setMovingFormClass('starting-form-active');
+    }
+    setTimeout(() => {
+      if(formChange) {
       
     }
-    setFormChange()
+    setFormChange(v => !v);
+    }, 400)
   }
 
   return (

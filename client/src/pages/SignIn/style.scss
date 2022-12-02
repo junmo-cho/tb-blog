@@ -26,6 +26,10 @@
       &.moving-form-active {
         animation: movingForm 1s linear forwards;
       }
+
+      &.starting-form-active {
+        animation: startingForm 1s linear forwards;
+      }
     }
 
     .moving-box {
@@ -49,6 +53,14 @@
         border-bottom-left-radius: 0;
         border-top-right-radius: 15px;
         border-bottom-right-radius: 15px;
+      }
+
+      &.starting {
+        animation: starting 1s linear forwards;
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
       }
 
       .moving-box-title {
@@ -75,6 +87,10 @@
         border-radius: 25px;
         color: #fff;
         cursor: pointer;
+
+        &:active {
+          transform: scale(0.9);
+        }
       }
     }
   }
@@ -95,6 +111,21 @@
   }
 }
 
+@keyframes starting {
+  0% {
+    width: 500px;
+    transform: translateX(600px);
+  }
+  50% {
+    width: 650px;
+    transform: translateX(200px);
+  }
+  100% {
+    width: 500px;
+    transform: translateX(0px);
+  }
+}
+
 @keyframes movingForm {
   0% {
     // width: 500px;
@@ -108,4 +139,19 @@
     // width: 500px;
     transform: translateX(0);
   }
-} 
+}
+
+@keyframes startingForm {
+  0% {
+    // width: 500px;
+    transform: translateX(0px);
+  }
+  50% {
+    // width: 650px;
+    transform: translateX(200px);
+  }
+  100% {
+    // width: 500px;
+    transform: translateX(600px);
+  }
+}
