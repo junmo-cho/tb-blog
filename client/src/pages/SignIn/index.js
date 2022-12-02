@@ -9,6 +9,9 @@ const SignIn = () => {
   const [movingFormClass, setMovingFormClass] = useState('moving-form-active');
 
   const onClickChange = () => {
+    if(formChange) {
+      
+    }
     setFormChange()
   }
 
