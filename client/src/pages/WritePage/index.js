@@ -62,11 +62,11 @@ const WrietPage = () => {
                 <option key={c} value={c} disabled={ c === "Category" } hidden={ c === "Category" } className="others">{c}</option>
               )) }
             </select>
-            <span className="boundary-line"></span>
+            {/* <span className="boundary-line"></span>
             <div className="input-area">
               <label htmlFor="user">작성자</label>
               <input id="user" type="user" name="user" placeholder="작성자을 입력해 주세요." { ...register("user") } />
-            </div>
+            </div> */}
           </div>
           <div className="input-area">
             <label htmlFor="title">제목</label>

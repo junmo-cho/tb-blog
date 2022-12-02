@@ -24,11 +24,11 @@
       transform: translateX(480px);
 
       &.moving-form-active {
-        animation: movingForm 1s linear forwards;
+        animation: movingForm 0.6s linear forwards;
       }
 
       &.starting-form-active {
-        animation: startingForm 1s linear forwards;
+        animation: startingForm 0.6s linear forwards;
       }
     }
 
@@ -43,12 +43,12 @@
       width: 500px;
       height: 100%;
       background: #B983FF;
-      opacity: 0.7;
+      // opacity: 0.7;
       border-top-left-radius: 15px;
       border-bottom-left-radius: 15px;
 
       &.moving {
-        animation: moving 1s linear forwards;
+        animation: moving 0.6s linear forwards;
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
         border-top-right-radius: 15px;
@@ -56,14 +56,51 @@
       }
 
       &.starting {
-        animation: starting 1s linear forwards;
+        animation: starting 0.6s linear forwards;
         border-top-left-radius: 15px;
         border-bottom-left-radius: 15px;
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
       }
 
-      .moving-box-title {
+      .signup-link-btn {
+        outline: none;
+        border: 1px solid #fff;
+        padding: 13px 32px;
+        background: none;
+        border-radius: 25px;
+        margin-top: 160px;
+        color: #fff;
+        cursor: pointer;
+
+        &:active {
+          transform: scale(0.9);
+        }
+      }
+    }
+
+    .text-area {
+      position: absolute;
+      left: 110px;
+      top: 253px;
+
+      &.login-text {
+        left: initial;
+        right: 110px;
+      }
+      &.signup-text {
+        left: 110px;
+        right: initial;
+      }
+
+      &.starting-text {
+        animation: startingText 0.4s linear backwards;
+      }
+      &.moving-text {
+        animation: movingText 0.4s linear backwards;
+      }
+
+      .signin-title {
         font-family: "Roboto";
         font-size: 32px;
         font-weight: 900;
@@ -73,24 +110,10 @@
         margin-bottom: 32px;
       }
 
-      .moving-box-description {
+      .signin-description {
         font-family: "NanumSquare";
         color: #fff;
         margin-bottom: 48px;
-      }
-
-      .signup-link-btn {
-        outline: none;
-        border: 1px solid #fff;
-        padding: 13px 32px;
-        background: none;
-        border-radius: 25px;
-        color: #fff;
-        cursor: pointer;
-
-        &:active {
-          transform: scale(0.9);
-        }
       }
     }
   }
@@ -137,7 +160,7 @@
   }
   100% {
     // width: 500px;
-    transform: translateX(0);
+    transform: translateX(-20px);
   }
 }
 
@@ -152,6 +175,26 @@
   }
   100% {
     // width: 500px;
-    transform: translateX(600px);
+    transform: translateX(480px);
+  }
+}
+
+@keyframes startingText {
+  0% {
+    transform: translateX(0px);
+  }
+
+  100% {
+    transform: translateX(50px);
+  }
+}
+
+@keyframes movingText {
+  0% {
+    transform: translateX(0px);
+  }
+
+  100% {
+    transform: translateX(-50px);
   }
 }

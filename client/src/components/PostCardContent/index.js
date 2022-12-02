@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { REMOVE_POST_REQUEST } from "../../reducer/post";
 import { AiOutlineComment, AiOutlineDelete } from 'react-icons/ai';
@@ -8,6 +8,9 @@ import CommentForm from "../CommentForm";
 const PostCardContent = ({ post }) => {
   const dispatch = useDispatch();
   const [commentOpen, setCommentOpen] = useState(false);
+  const { me } = useSelector(state => state.user);
+
+  console.log(me)
 
   const onRemovePost = (postId) => {
     dispatch({
@@ -40,7 +43,7 @@ const PostCardContent = ({ post }) => {
           </Link>
         </div>
         <div className="right-info">
-          <span className="user-name">{ post.user }</span>
+          {/* <span className="user-name">{ me.nickname }</span> */}
           <span className="date-created">{ post.date }</span>
           <div className="btn-wrap">
             <button className='comment-btn' onClick={onToggleComment}>

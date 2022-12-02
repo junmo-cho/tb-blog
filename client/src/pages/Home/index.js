@@ -3,9 +3,11 @@ import { HiPencil } from "react-icons/hi";
 import "./style.scss";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const Home = () => {
   const { mainPosts } = useSelector(state => state.post);
+  const { me } = useSelector(state => state.user);
 
   const location = useLocation(); 
   const params = new URLSearchParams(location.search)
@@ -15,6 +17,10 @@ const Home = () => {
 
   const categoryPosts = mainPosts.filter((c) => c.category === categoryParams);
   // console.log(Boolean(categoryPosts.length !== 0), categoryPosts);
+
+  useEffect(() => {
+    
+  }, []);
 
   return (
     <main className="post-container">

@@ -7,21 +7,42 @@ const SignIn = () => {
   const [formChange, setFormChange] = useState(true);
   const [movingClass, setMovingClass] = useState('');
   const [movingFormClass, setMovingFormClass] = useState('');
+  const [textPosition, setTextPosition] = useState('');
+  const [textMoving, setTextMoving] = useState('');
+
+  const signInText = {
+    signUpTitle: "Welcome Back!",
+    signUpDescription: "사용하시는 두레이 이메일을 등록해 주세요.",
+    logInTitle: "Hello, Friend!",
+    logInDescription: "등록한 두레이 이메일로 로그인을 해주세요.",
+  }
 
   const onClickChange = () => {
     if(formChange) {
       setMovingClass('moving');
       setMovingFormClass('moving-form-active');
+      setTextMoving('moving-text');
     }else{
       setMovingClass('starting');
       setMovingFormClass('starting-form-active');
+      setTextMoving('starting-text');
     }
     setTimeout(() => {
-      if(formChange) {
-      
-    }
-    setFormChange(v => !v);
+      setFormChange(v => !v);
+      // if(formChange) {
+      //   setTextPosition('login-text');
+      // }else{
+      //   setTextPosition('signup-text');
+      // }
     }, 400)
+
+    setTimeout(() => {
+      if(formChange) {
+        setTextPosition('login-text');
+      }else{
+        setTextPosition('signup-text');
+      }
+    }, 500)
   }
 
   return (
@@ -31,9 +52,21 @@ const SignIn = () => {
           { formChange ? <Login /> : <SignUp /> }
         </div>
         <div className={`moving-box ${movingClass}`}>
-          <h2 className="moving-box-title">Welcome Back!</h2>
-          <p className="moving-box-description">사용하시는 두레이 이메일을 등록해 주세요.</p>
           <button type="button" className="signup-link-btn" onClick={onClickChange}>SIGN UP</button>
+        </div>
+
+        <div className={`text-area ${textPosition} ${textMoving}`}>
+          {formChange ? (
+            <div className="login-text-container">
+              <h2 className="signin-title">{ signInText.signUpTitle }</h2>
+              <p className="signin-description">{ signInText.signUpDescription }</p>
+            </div>
+          ) : (
+            <div className="signup-text-container">
+              <h2 className="signin-title">{ signInText.logInTitle }</h2>
+              <p className="signin-description">{ signInText.logInDescription }</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
