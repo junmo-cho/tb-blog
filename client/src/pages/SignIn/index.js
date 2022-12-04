@@ -49,7 +49,7 @@ const SignIn = () => {
     <div className="signin-container">
       <div className="signin-box">
         <div className={`moving-form ${movingFormClass}`}>
-          { formChange ? <Login /> : <SignUp /> }
+          { formChange ? <Login /> : <SignUp setFormChange={setFormChange} setMovingClass={setMovingClass} setMovingFormClass={setMovingFormClass} setTextMoving={setTextMoving} setTextPosition={setTextPosition} /> }
         </div>
         <div className={`moving-box ${movingClass}`}>
           <button type="button" className="signup-link-btn" onClick={onClickChange}>SIGN UP</button>
@@ -57,14 +57,14 @@ const SignIn = () => {
 
         <div className={`text-area ${textPosition} ${textMoving}`}>
           {formChange ? (
-            <div className="login-text-container">
-              <h2 className="signin-title">{ signInText.signUpTitle }</h2>
-              <p className="signin-description">{ signInText.signUpDescription }</p>
-            </div>
-          ) : (
             <div className="signup-text-container">
               <h2 className="signin-title">{ signInText.logInTitle }</h2>
               <p className="signin-description">{ signInText.logInDescription }</p>
+            </div>
+          ) : (
+            <div className="login-text-container">
+              <h2 className="signin-title">{ signInText.signUpTitle }</h2>
+              <p className="signin-description">{ signInText.signUpDescription }</p>
             </div>
           )}
         </div>

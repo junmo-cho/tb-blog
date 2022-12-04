@@ -4,13 +4,17 @@ import { Link } from "react-router-dom";
 import { REMOVE_POST_REQUEST } from "../../reducer/post";
 import { AiOutlineComment, AiOutlineDelete } from 'react-icons/ai';
 import CommentForm from "../CommentForm";
+import moment from "moment";
+
+moment.locale('ko');
 
 const PostCardContent = ({ post }) => {
   const dispatch = useDispatch();
   const [commentOpen, setCommentOpen] = useState(false);
   const { me } = useSelector(state => state.user);
+  const id = useSelector(state => state.user.me?.id);
 
-  console.log(me)
+  console.log(post);
 
   const onRemovePost = (postId) => {
     dispatch({
@@ -43,15 +47,17 @@ const PostCardContent = ({ post }) => {
           </Link>
         </div>
         <div className="right-info">
-          {/* <span className="user-name">{ me.nickname }</span> */}
-          <span className="date-created">{ post.date }</span>
+          <span className="user-name">{ me.nickname }</span>
+          <span className="date-created">{ moment(post.createdAt).format('YYYY.MM.DD') }</span>
           <div className="btn-wrap">
             <button className='comment-btn' onClick={onToggleComment}>
               <AiOutlineComment />
             </button>
-            <button className='delete-btn' onClick={() => { onRemovePost(post.id) }}>
-              <AiOutlineDelete />
-            </button>
+            {/* {id && post.User.id === id ? (
+              <button className='delete-btn' onClick={() => { onRemovePost(post.id) }}>
+                <AiOutlineDelete />
+              </button>
+            ) : null} */}
           </div>
         </div>
       </div>

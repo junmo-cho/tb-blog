@@ -5,7 +5,7 @@ import { SIGN_UP_REQUEST, SIGN_UP_RESET } from "../../reducer/user";
 import { useNavigate } from "react-router-dom";
 import "./style.scss";
 
-const SignUp = () => {
+const SignUp = ({ setFormChange, setMovingClass, setMovingFormClass, setTextMoving, setTextPosition }) => {
   const { register, handleSubmit, formState: { isSubmitting } } = useForm();
   const [passwordError, setPasswordError] = useState(false);
   const dispatch = useDispatch();
@@ -28,7 +28,16 @@ const SignUp = () => {
       dispatch({
         type: SIGN_UP_RESET,
       });
-      return navigate('/login');
+
+      alert("이메일이 등록 되었습니다:)");
+
+      setMovingClass('starting');
+      setMovingFormClass('starting-form-active');
+      setTextMoving('starting-text');
+
+      setFormChange(v => !v);
+
+      setTextPosition('signup-text');
     }
   }, [signUpDone]);
 

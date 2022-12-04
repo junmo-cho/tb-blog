@@ -36,9 +36,9 @@ const Navbar = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    return navigate("/?category=All", { replace: true });
-  }, []);
+  // useEffect(() => {
+  //   return navigate("/?category=All", { replace: true });
+  // }, []);
 
   return (
     <header>

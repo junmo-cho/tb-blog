@@ -1,13 +1,14 @@
 import PostContent from "../../components/PostContent";
 import { HiPencil } from "react-icons/hi";
 import "./style.scss";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
 const Home = () => {
   const { mainPosts } = useSelector(state => state.post);
   const { me } = useSelector(state => state.user);
+  const navigate = useNavigate();
 
   const location = useLocation(); 
   const params = new URLSearchParams(location.search)
@@ -19,8 +20,12 @@ const Home = () => {
   // console.log(Boolean(categoryPosts.length !== 0), categoryPosts);
 
   useEffect(() => {
-    
-  }, []);
+    if(me) {
+      return navigate("/?category=All", { replace: true });
+    }else{
+      return navigate("/signin", { replace: true });
+    }
+  }, [me]);
 
   return (
     <main className="post-container">
