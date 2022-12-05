@@ -3,12 +3,13 @@ import axios from "axios";
 import { ADD_COMMENT_FAILURE, ADD_COMMENT_REQUEST, ADD_COMMENT_SUCCESS, ADD_POST_FAILURE, ADD_POST_REQUEST, ADD_POST_SUCCESS, LOAD_POST_FAILURE, LOAD_POST_REQUEST, LOAD_POST_SUCCESS, REMOVE_POST_FAILURE, REMOVE_POST_REQUEST, REMOVE_POST_SUCCESS } from "../reducer/post";
 
 function addPostAPI(data) {
-  return axios.post('http://localhost:8080/post', data);
+  return axios.post('/post', data);
 }
 
 function* addPost(action) {
   try {
     const result = yield call(addPostAPI, action.data);
+    console.log(result.data);
     yield put({
       type: ADD_POST_SUCCESS,
       data: result.data,
@@ -22,7 +23,7 @@ function* addPost(action) {
 }
 
 function loadPostAPI(data) {
-  return axios.get('http://localhost:8080/post', data);
+  return axios.get('/post', data);
 }
 
 function* loadPost(action) {
@@ -41,7 +42,7 @@ function* loadPost(action) {
 }
 
 function removePostAPI(data) {
-  return axios.delete(`http://localhost:8080/post/${data}`);
+  return axios.delete(`/post/${data}`);
 }
 
 function* removePost(action) {
@@ -60,7 +61,7 @@ function* removePost(action) {
 }
 
 function addCommentAPI(data) {
-  return axios.post(`http://localhost:8080/post/${data.postId}/comment`, data);
+  return axios.post(`/post/${data.postId}/comment`, data);
 }
 
 function* addComment(action) {

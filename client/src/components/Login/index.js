@@ -20,7 +20,7 @@ const Login = () => {
 
   useEffect(() => {
     if(loginDone) {
-      return navigate("/", { replace: true });
+      return navigate("/");
     }
   }, [loginDone]);
 

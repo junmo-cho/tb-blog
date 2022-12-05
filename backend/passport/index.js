@@ -11,6 +11,8 @@ module.exports = () => {
     try {
       const user = await User.findOne({ where: { id } });
       done(null, user);
+
+      console.log('passport', user);
     } catch (error) {
       console.error(error);
       done(error);

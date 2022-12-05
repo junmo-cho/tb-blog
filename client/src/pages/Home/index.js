@@ -2,8 +2,9 @@ import PostContent from "../../components/PostContent";
 import { HiPencil } from "react-icons/hi";
 import "./style.scss";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { LOAD_LOGIN_INFO_REQUEST } from "../../reducer/user";
 
 const Home = () => {
   const { mainPosts } = useSelector(state => state.post);
@@ -18,12 +19,20 @@ const Home = () => {
 
   const categoryPosts = mainPosts.filter((c) => c.category === categoryParams);
   // console.log(Boolean(categoryPosts.length !== 0), categoryPosts);
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch({
+      type: 'LOAD_LOGIN_INFO_REQUEST',
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log(me);
     if(me) {
-      return navigate("/?category=All", { replace: true });
+      return navigate("/?category=All");
     }else{
-      return navigate("/signin", { replace: true });
+      return navigate("/signin");
     }
   }, [me]);
 

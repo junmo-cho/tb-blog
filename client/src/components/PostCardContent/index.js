@@ -14,8 +14,6 @@ const PostCardContent = ({ post }) => {
   const { me } = useSelector(state => state.user);
   const id = useSelector(state => state.user.me?.id);
 
-  console.log(post);
-
   const onRemovePost = (postId) => {
     dispatch({
       type: REMOVE_POST_REQUEST, 
@@ -53,11 +51,11 @@ const PostCardContent = ({ post }) => {
             <button className='comment-btn' onClick={onToggleComment}>
               <AiOutlineComment />
             </button>
-            {/* {id && post.User.id === id ? (
+            {id && post.User.id === id ? (
               <button className='delete-btn' onClick={() => { onRemovePost(post.id) }}>
                 <AiOutlineDelete />
               </button>
-            ) : null} */}
+            ) : null}
           </div>
         </div>
       </div>

@@ -6,6 +6,9 @@ export const initialState = {
   loginDone: false,
   loginError: null,
   me: null,
+  loadLoginInfoLoading: false,
+  loadLoginInfoDone: false,
+  loadLoginInfoError: null,
 };
 
 export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
@@ -16,6 +19,10 @@ export const SIGN_UP_RESET = 'SIGN_UP_RESET';
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
+
+export const LOAD_LOGIN_INFO_REQUEST = 'LOAD_LOGIN_INFO_REQUEST';
+export const LOAD_LOGIN_INFO_SUCCESS = 'LOAD_LOGIN_INFO_SUCCESS';
+export const LOAD_LOGIN_INFO_FAILURE = 'LOAD_LOGIN_INFO_FAILURE';
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -52,6 +59,8 @@ const reducer = (state = initialState, action) => {
         loginError: null,
       };
     case LOG_IN_SUCCESS:
+      console.log('reducer', action.data);
+
       return {
         ...state,
         loginLoading: false,
@@ -63,6 +72,26 @@ const reducer = (state = initialState, action) => {
         ...state,
         loginLoading: false,
         loginError: action.error,
+      };
+    case LOAD_LOGIN_INFO_REQUEST:
+      return {
+        ...state,
+        loadLoginInfoLoading: true,
+        loadLoginInfoDone: false,
+        loadLoginInfoError: null,
+      };
+    case LOAD_LOGIN_INFO_SUCCESS:
+      return {
+        ...state,
+        loadLoginInfoLoading: false,
+        loadLoginInfoDone: true,
+        me: action.data,
+      };
+    case LOAD_LOGIN_INFO_FAILURE:
+      return {
+        ...state,
+        loadLoginInfoLoading: false,
+        loadLoginInfoError: action.error,
       };
     default:
       return state;

@@ -11,16 +11,21 @@ const PostContent = ({ categoryPosts }) => {
   const dispatch = useDispatch();
   const { loadPostLoading, removePostDone, removePostLoading } = useSelector(state => state.post);
   const { hasMorePosts } = useSelector(state => state.post);
+  const { me } = useSelector(state => state.user);
 
   useEffect(() => {
-    if(hasMorePosts && !loadPostLoading) {
-      const lastId = mainPosts[mainPosts.length - 1]?.id;
-      dispatch({
-        type: LOAD_POST_REQUEST,
-        lastId,
-      });
+    if(me) {
+      if(hasMorePosts && !loadPostLoading) {
+        const lastId = mainPosts[mainPosts.length - 1]?.id;
+        dispatch({
+          type: LOAD_POST_REQUEST,
+          lastId,
+        });
+      }
     }
-  }, []);
+  }, [me]);
+
+  console.log('front', me);
 
   return (
     <>

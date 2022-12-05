@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { Post, Comment, User } = require('../models');
+const { isLoggedIn } = require('./middlewares');
 
 router.get('/', async (req, res, next) => {
   try {
@@ -31,13 +32,14 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/', isLoggedIn, async (req, res, next) => {
   try {
     const post = await Post.create({
       category: req.body.category,
       title: req.body.title,
       subTitle: req.body.subTitle,
       content: req.body.content,
+      UserId: req.user.id,
       // user: req.body.user,
     });
 
@@ -45,13 +47,13 @@ router.post('/', async (req, res, next) => {
       where: { id: post.id },
       include: [{
         model: Comment,
-        include: [{
-          model: User,
-          attributes: ['id', 'nickname'],
-        }]
+        // include: [{
+        //   model: User,
+        //   attributes: ['id', 'nickname'],
+        // }]
       }, {
         model: User,
-        attributes: ['id', 'nickname'],
+        // attributes: ['id', 'nickname'],
       }],
     });
 
@@ -64,10 +66,11 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-router.post('/:postId/comment', async (req, res, next) => {
+router.post('/:postId/comment', isLoggedIn, async (req, res, next) => {
   try {
     const comment = await Comment.create({
       content: req.body.content,
+      UserId: req.user.id,
       PostId: parseInt(req.params.postId)
     });
 
@@ -80,7 +83,7 @@ router.post('/:postId/comment', async (req, res, next) => {
   }
 });
 
-router.delete('/:postId', async (req, res, next) => {
+router.delete('/:postId', isLoggedIn, async (req, res, next) => {
   try {
     await Post.destroy({
       where: {
