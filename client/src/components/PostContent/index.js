@@ -25,8 +25,6 @@ const PostContent = ({ categoryPosts }) => {
     }
   }, [me]);
 
-  console.log('front', me);
-
   return (
     <>
       { removePostLoading ? (

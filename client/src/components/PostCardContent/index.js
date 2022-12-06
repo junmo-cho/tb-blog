@@ -45,7 +45,7 @@ const PostCardContent = ({ post }) => {
           </Link>
         </div>
         <div className="right-info">
-          <span className="user-name">{ me.nickname }</span>
+          <span className="user-name">{ me?.nickname }</span>
           <span className="date-created">{ moment(post.createdAt).format('YYYY.MM.DD') }</span>
           <div className="btn-wrap">
             <button className='comment-btn' onClick={onToggleComment}>

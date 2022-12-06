@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Login from "../../components/Login";
 import SignUp from "../../components/SignUp";
 import './style.scss';
@@ -9,6 +11,8 @@ const SignIn = () => {
   const [movingFormClass, setMovingFormClass] = useState('');
   const [textPosition, setTextPosition] = useState('');
   const [textMoving, setTextMoving] = useState('');
+  const { me } = useSelector(state => state.user);
+  const navigate = useNavigate();
 
   const signInText = {
     signUpTitle: "Welcome Back!",
@@ -44,6 +48,14 @@ const SignIn = () => {
       }
     }, 500)
   }
+
+  useEffect(() => {
+    if(me) {
+      return navigate("/?category=All");
+    }else{
+      return navigate("/signin");
+    }
+  }, [me]);
 
   return (
     <div className="signin-container">

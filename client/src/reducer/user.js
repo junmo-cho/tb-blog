@@ -5,10 +5,13 @@ export const initialState = {
   loginLoading: false,
   loginDone: false,
   loginError: null,
-  me: null,
+  logoutLoading: false,
+  logoutDone: false,
+  logoutError: null,
   loadLoginInfoLoading: false,
   loadLoginInfoDone: false,
   loadLoginInfoError: null,
+  me: null,
 };
 
 export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
@@ -20,9 +23,13 @@ export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
 
-export const LOAD_LOGIN_INFO_REQUEST = 'LOAD_LOGIN_INFO_REQUEST';
-export const LOAD_LOGIN_INFO_SUCCESS = 'LOAD_LOGIN_INFO_SUCCESS';
-export const LOAD_LOGIN_INFO_FAILURE = 'LOAD_LOGIN_INFO_FAILURE';
+export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
+export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
+export const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE';
+
+export const LOAD_USER_REQUEST = 'LOAD_USER_REQUEST';
+export const LOAD_USER_SUCCESS = 'LOAD_USER_SUCCESS';
+export const LOAD_USER_FAILURE = 'LOAD_USER_FAILURE';
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -51,6 +58,26 @@ const reducer = (state = initialState, action) => {
         signUpLoading: false,
         signUpDone: false,
       };
+    case LOAD_USER_REQUEST:
+      return {
+        ...state,
+        loadLoginInfoLoading: true,
+        loadLoginInfoDone: false,
+        loadLoginInfoError: null,
+      };
+    case LOAD_USER_SUCCESS:
+      return {
+        ...state,
+        loadLoginInfoLoading: false,
+        loadLoginInfoDone: true,
+        me: action.data,
+      };
+    case LOAD_USER_FAILURE:
+      return {
+        ...state,
+        loadLoginInfoLoading: false,
+        loadLoginInfoError: action.error,
+      };
     case LOG_IN_REQUEST:
       return {
         ...state,
@@ -59,8 +86,6 @@ const reducer = (state = initialState, action) => {
         loginError: null,
       };
     case LOG_IN_SUCCESS:
-      console.log('reducer', action.data);
-
       return {
         ...state,
         loginLoading: false,
@@ -73,25 +98,25 @@ const reducer = (state = initialState, action) => {
         loginLoading: false,
         loginError: action.error,
       };
-    case LOAD_LOGIN_INFO_REQUEST:
+    case LOG_OUT_REQUEST:
       return {
         ...state,
-        loadLoginInfoLoading: true,
-        loadLoginInfoDone: false,
-        loadLoginInfoError: null,
+        logoutLoading: true,
+        logoutDone: false,
+        logoutError: null,
       };
-    case LOAD_LOGIN_INFO_SUCCESS:
+    case LOG_OUT_SUCCESS:
       return {
         ...state,
-        loadLoginInfoLoading: false,
-        loadLoginInfoDone: true,
-        me: action.data,
+        logoutLoading: false,
+        logoutDone: true,
+        me: null,
       };
-    case LOAD_LOGIN_INFO_FAILURE:
+    case LOG_OUT_FAILURE:
       return {
         ...state,
-        loadLoginInfoLoading: false,
-        loadLoginInfoError: action.error,
+        logoutLoading: false,
+        logoutError: action.error,
       };
     default:
       return state;

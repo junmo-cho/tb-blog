@@ -1,10 +1,10 @@
 import PostContent from "../../components/PostContent";
 import { HiPencil } from "react-icons/hi";
-import "./style.scss";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { LOAD_LOGIN_INFO_REQUEST } from "../../reducer/user";
+import { LOAD_USER_REQUEST } from "../../reducer/user";
+import "./style.scss";
 
 const Home = () => {
   const { mainPosts } = useSelector(state => state.post);
@@ -23,12 +23,11 @@ const Home = () => {
 
   useEffect(() => {
     dispatch({
-      type: 'LOAD_LOGIN_INFO_REQUEST',
+      type: LOAD_USER_REQUEST,
     });
   }, []);
 
   useEffect(() => {
-    console.log(me);
     if(me) {
       return navigate("/?category=All");
     }else{

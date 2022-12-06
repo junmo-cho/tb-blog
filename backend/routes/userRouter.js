@@ -9,10 +9,16 @@ router.get('/', async (req, res, next) => {
   try {
     console.log("userRouter", req.user);
     if(req.user) {
-      const user = await User.findOne({
-        where: { id: req.user.id }
+      const fullUserWithoutPassword = await User.findOne({
+        where: { id: req.user.id },
+        attributes: {
+          exclude: ['password']
+        },
+        include: [{
+          model: Post,
+        }],
       });
-      res.status(200).json(user);
+      res.status(200).json(fullUserWithoutPassword);
     }else{
       res.status(200).json(null)
     }
@@ -55,7 +61,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
   }) (req, res, next)
 });
 
-router.post('/', isLoggedIn, async (req, res, next) => {
+router.post('/', isNotLoggedIn, async (req, res, next) => {
   try {
     const exUser = await User.findOne({
       where: {
@@ -83,10 +89,15 @@ router.post('/', isLoggedIn, async (req, res, next) => {
   }
 });
 
-router.post('/logout', isLoggedIn, (req, res) => {
-  req.logout();
-  req.session.destroy();
-  res.send('ok');
+router.post('/logout', isLoggedIn, (req, res, next) => {
+  req.logout((err) => {
+    if(err) {
+      return next(err);
+    }
+    res.redirect('/');
+  });
+  // req.session.destroy();
+  // res.send('ok');
 });
 
 module.exports = router;
