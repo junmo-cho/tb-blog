@@ -44,6 +44,10 @@ export const initialState = {
   loadPostDone: false,
   loadPostError: null,
   hasMorePosts: true,
+  imagePaths: null,
+  uploadImagesLoading: false,
+  uploadImagesDone: false,
+  uploadImagesError: null,
 };
 
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
@@ -63,6 +67,10 @@ export const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE';
 export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
 export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
 export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
+
+export const UPLOAD_IMAGES_REQUEST = 'UPLOAD_IMAGES_REQUEST';
+export const UPLOAD_IMAGES_SUCCESS = 'UPLOAD_IMAGES_SUCCESS';
+export const UPLOAD_IMAGES_FAILURE = 'UPLOAD_IMAGES_FAILURE';
 
 // const dummyPost = (data) => ({
 //   id: 4,
@@ -173,8 +181,6 @@ const reducer = (state = initialState, action) => {
       post.Comments = [action.data, ...post.Comments];
       const mainPosts = [...state.mainPosts];
       mainPosts[postIndex] = post;
-
-      console.log(mainPosts);
       
       return {
         ...state,
@@ -187,6 +193,28 @@ const reducer = (state = initialState, action) => {
         ...state,
         loadPostLoading: false,
         addCommentError: action.error,
+      };
+    case UPLOAD_IMAGES_REQUEST:
+      return {
+        ...state,
+        uploadImagesLoading: true,
+        uploadImagesDone: false,
+        uploadImagesError: null,
+      };
+    case UPLOAD_IMAGES_SUCCESS:
+      console.log(action.data);
+
+      return {
+        ...state,
+        uploadImagesLoading: false,
+        uploadImagesDone: true,
+        imagePaths: action.data,
+      };
+    case UPLOAD_IMAGES_FAILURE:
+      return {
+        ...state,
+        uploadImagesLoading: false,
+        uploadImagesError: action.error,
       };
     default:
       return state;

@@ -3,7 +3,11 @@ import { all, fork } from "redux-saga/effects";
 import postSaga from "./post";
 import userSaga from "./user";
 
-axios.defaults.baseURL = 'http://localhost:8080';
+// import dotenv from "dotenv";
+
+// dotenv.config();
+
+axios.defaults.baseURL = process.env.REACT_APP_URL;
 axios.defaults.withCredentials = true;
 
 export default function* rootSaga() {

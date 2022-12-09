@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
@@ -10,6 +11,10 @@ const postRouter = require('./routes/postRoutes');
 const passportConfig = require('./passport');
 
 const app = express();
+
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 db.sequelize.sync()
   .then(() => {
@@ -25,11 +30,12 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser('techbsecret'));
+app.use('/', express.static(path.join(__dirname, 'uploads')));
+app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(session({
   saveUninitialized: false,
   resave: false,
-  secret: 'techbsecret',
+  secret: process.env.COOKIE_SECRET,
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -41,4 +47,4 @@ app.get('/', (req, res) => {
 app.use('/user', userRouter);
 app.use('/post', postRouter);
 
-app.listen(8080, () => console.log(`Server runnig on 8080`));
+app.listen(process.env.PORT, () => console.log(`Server runnig on ${process.env.PORT}`));

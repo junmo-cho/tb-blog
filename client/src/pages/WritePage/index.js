@@ -50,12 +50,14 @@ const WrietPage = () => {
 
     // console.log(data);
     // console.log(quillText)
+
+    console.log(quillText);
   };
 
   return (
     <div className="write-container">
       <div className="write-card">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
           <div className="top-area">
             <select name="category" onChange={handleSelect} value={selected} className={ selected === "Category" ? "dis" : "" }>
               { categoryList.map((c) => (

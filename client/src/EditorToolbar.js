@@ -1,5 +1,11 @@
 import { Quill } from "react-quill";
-import hljs from 'highlight.js'
+import hljs from 'highlight.js';
+import { useDispatch } from "react-redux";
+
+import ImageResize from 'quill-image-resize';
+import { UPLOAD_IMAGES_REQUEST } from "./reducer/post";
+import axios from "axios";
+Quill.register('modules/ImageResize', ImageResize);
 
 // Custom Undo button icon component for Quill editor. You can import it directly
 // from 'quill/assets/icons/undo.svg' but I found that a number of loaders do not
@@ -54,6 +60,31 @@ hljs.configure({
   languages: ['javascript', 'ruby', 'python', 'rust'],
 });
 
+const imageHandler = () => {
+  const input = document.createElement("input");
+
+  input.setAttribute("type", "file");
+  input.setAttribute("accept", "image/*");
+  input.click();
+
+  input.addEventListener('change', async (e) => {
+    console.log(e.target.files);
+
+    const imageFormData = new FormData();
+    [].forEach.call(e.target.files, (f) => {
+      imageFormData.append('image', f);
+    });
+
+    try {
+      const result = await axios.post('http://localhost:8080/post/images', imageFormData);
+      console.log('성공 시, 백엔드가 보내주는 데이터', result.data.map((v) => v.url));
+    } catch (error) {
+      console.log('이미지 로드가 안되네유...');
+    }
+  });
+
+}
+
 // Modules object for setting up the Quill editor
 export const modules = {
   syntax: {
@@ -63,13 +94,18 @@ export const modules = {
     container: "#toolbar",
     handlers: {
       undo: undoChange,
-      redo: redoChange
+      redo: redoChange,
+      image: imageHandler,
     }
   },
   history: {
     delay: 500,
     maxStack: 100,
     userOnly: true
+  },
+
+  ImageResize: {
+    parchment: Quill.import('parchment')
   }
 };
 
