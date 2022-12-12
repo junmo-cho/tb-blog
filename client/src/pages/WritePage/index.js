@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { BsArrowBarLeft } from "react-icons/bs";
@@ -14,10 +14,46 @@ import "./style.scss";
 import { ADD_POST_REQUEST, ADD_POST_RESET, ADD_POST_STATE_RESET } from "../../reducer/post";
 import { useNavigate } from "react-router-dom";
 
+import { Quill } from "react-quill";
+import hljs from 'highlight.js';
+
+import ImageResize from 'quill-image-resize';
+import axios from "axios";
+Quill.register('modules/ImageResize', ImageResize);
+
+// Undo and redo functions for Custom Toolbar
+function undoChange() {
+  this.quill.history.undo();
+}
+function redoChange() {
+  this.quill.history.redo();
+}
+
+// Add sizes to whitelist and register them
+const Size = Quill.import("formats/size");
+Size.whitelist = ["extra-small", "small", "medium", "large"];
+Quill.register(Size, true);
+
+// Add fonts to whitelist and register them
+const Font = Quill.import("formats/font");
+Font.whitelist = [
+  "arial",
+  "comic-sans",
+  "courier-new",
+  "georgia",
+  "helvetica",
+  "lucida"
+];
+Quill.register(Font, true);
+
+hljs.configure({
+  languages: ['javascript', 'ruby', 'python', 'rust'],
+});
+
 const WrietPage = () => {
   const { register, handleSubmit, formState: { isSubmitting } } = useForm();
   const dispatch = useDispatch();
-  
+
   const categoryList = ["Category", "Web", "Server", "Design", "Tool", "Etc"];
   const [selected, setSelected] = useState("Category");
   const [quillText, setQuillText] = useState("");
@@ -82,8 +118,8 @@ const WrietPage = () => {
           <div className="input-area content-area">
             {/* <label htmlFor="content">본문</label>
             <textarea id="content" type="content" name="content" placeholder="본문이외다" { ...register("content") } ></textarea> */}
-            <EditorToolbar />
-            <ReactQuill theme="snow" value={quillText} onChange={setQuillText} modules={modules} formats={formats} />
+            <EditorToolbar quillText={quillText} setQuillText={setQuillText} />
+            {/* <ReactQuill theme="snow" value={quillText} onChange={setQuillText} modules={modules} formats={formats} /> */}
           </div>
           <div className="btn-wrap">
             <button type="button" className="exit">

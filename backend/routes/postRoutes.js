@@ -7,10 +7,10 @@ const { isLoggedIn } = require('./middlewares');
 const path = require('path');
 
 try {
-  fs.accessSync('uploads');
+  fs.accessSync('backend/uploads');
 } catch (error) {
   console.log('uploads 폴더가 없으므로 생성합니다.');
-  fs.mkdirSync('uploads');
+  fs.mkdirSync('backend/uploads');
 }
 
 router.get('/', async (req, res, next) => {
@@ -79,7 +79,7 @@ router.post('/', isLoggedIn, async (req, res, next) => {
 const upload = multer({
   storage: multer.diskStorage({
     destination(req, file, done) {
-      done(null, 'uploads');
+      done(null, 'backend/uploads');
     },
     filename(req, file, done) {
       const ext = path.extname(file.originalname);
@@ -91,12 +91,13 @@ const upload = multer({
   limits: { fileSize: 20 * 1024 * 1024 },
 });
 
-router.post('/images', isLoggedIn, upload.array('image'), async (req, res, next) => {
-  console.log('전달받은 파일들', req.files);
-  res.json(req.files.map((v) => {
-    const IMG_URL = `http://localhost:8080/${v.filename}`;
-    return ({ url: IMG_URL });
-  }));
+router.post('/images', isLoggedIn, upload.single('image'), (req, res, next) => {
+  console.log('전달받은 파일', req.file);
+  console.log('저장된 파일의 이름', req.file.filename);
+
+  const IMG_URL = `http://localhost:8080/${req.file.filename}`;
+  console.log(IMG_URL);
+  res.json({ url: IMG_URL });
 });
 
 router.post('/:postId/comment', isLoggedIn, async (req, res, next) => {
