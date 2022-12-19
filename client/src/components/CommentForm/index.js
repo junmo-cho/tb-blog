@@ -32,7 +32,7 @@ const CommentForm = ({ post }) => {
         <ul>
           { post.Comments.map((comment) => (
             <li key={comment.id} className="comment-card">
-              <span className="comment-user">{}</span>
+              <span className="comment-user">{comment.User.nickname}</span>
               <div className="comment-contents">{comment.content}</div>
             </li>
           )) }

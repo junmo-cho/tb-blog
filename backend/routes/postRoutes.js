@@ -6,6 +6,10 @@ const { Post, Comment, User } = require('../models');
 const { isLoggedIn } = require('./middlewares');
 const path = require('path');
 
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 try {
   fs.accessSync('backend/uploads');
 } catch (error) {
@@ -95,7 +99,7 @@ router.post('/images', isLoggedIn, upload.single('image'), (req, res, next) => {
   console.log('전달받은 파일', req.file);
   console.log('저장된 파일의 이름', req.file.filename);
 
-  const IMG_URL = `http://localhost:8080/${req.file.filename}`;
+  const IMG_URL = `${process.env.BACK_URL}/${req.file.filename}`;
   console.log(IMG_URL);
   res.json({ url: IMG_URL });
 });
@@ -113,6 +117,35 @@ router.post('/:postId/comment', isLoggedIn, async (req, res, next) => {
     console.error(error);
 
     res.status(500).json({ message: `Server Error ${error}` });
+    next(error);
+  }
+});
+
+router.patch('/:postId', isLoggedIn, async (req, res, next) => { // PATCH /post/10
+  try {
+    await Post.update({
+      category: req.body.category,
+      title: req.body.title,
+      subTitle: req.body.subTitle,
+      content: req.body.content,
+      UserId: req.user.id,
+    }, {
+      where: {
+        id: req.params.postId,
+        UserId: req.user.id,
+      },
+    });
+
+    res.status(200).json({ 
+      PostId: parseInt(req.params.postId, 10),
+      category: req.body.category,
+      title: req.body.title,
+      subTitle: req.body.subTitle,
+      content: req.body.content,
+      UserId: req.user.id, 
+    });
+  } catch (error) {
+    console.error(error);
     next(error);
   }
 });

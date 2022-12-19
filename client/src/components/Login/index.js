@@ -9,7 +9,7 @@ const Login = () => {
   const { register, handleSubmit, formState: { isSubmitting } } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loginDone } = useSelector(state => state.user);
+  const { loginDone, loginError } = useSelector(state => state.user);
 
   const onSubmitLogin = (data) => {
     dispatch({
@@ -23,6 +23,12 @@ const Login = () => {
       return navigate("/");
     }
   }, [loginDone]);
+
+  useEffect(() => {
+    if(loginError) {
+      alert(loginError);
+    }
+  }, [loginError]);
 
   return (
     <div className="login-container">

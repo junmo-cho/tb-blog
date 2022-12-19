@@ -2,15 +2,13 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { SIGN_UP_REQUEST, SIGN_UP_RESET } from "../../reducer/user";
-import { useNavigate } from "react-router-dom";
 import "./style.scss";
 
 const SignUp = ({ setFormChange, setMovingClass, setMovingFormClass, setTextMoving, setTextPosition }) => {
   const { register, handleSubmit, formState: { isSubmitting } } = useForm();
   const [passwordError, setPasswordError] = useState(false);
   const dispatch = useDispatch();
-  const { signUpDone } = useSelector(state => state.user);
-  const navigate = useNavigate();
+  const { signUpDone, signUpError } = useSelector(state => state.user);
 
   const onSubmitSignUp = (data) => {
     if(data.password !== data.passwordCheck) {
@@ -41,6 +39,12 @@ const SignUp = ({ setFormChange, setMovingClass, setMovingFormClass, setTextMovi
     }
   }, [signUpDone]);
 
+  useEffect(() => {
+    if(signUpError) {
+      alert(signUpError);
+    }
+  }, [signUpError]);
+
   return (
     <div className="signup-container">
       <h2 className="signup-title">이메일 등록하기</h2>
@@ -56,7 +60,7 @@ const SignUp = ({ setFormChange, setMovingClass, setMovingFormClass, setTextMovi
         <div className="password-area">
           <label htmlFor="password">비밀번호</label>
           <input name="password" type="password" placeholder="Password" required { ...register("password") } />
-          { passwordError ? <span>비밀번호가 일치하지 않습니다.</span> : null }
+          { passwordError ? <span className="error-password-message">비밀번호가 일치하지 않습니다.</span> : null }
         </div>
         <div className="password-check-area">
           <label htmlFor="passwordCheck">비밀번호 확인</label>

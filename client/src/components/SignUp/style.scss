@@ -23,6 +23,12 @@
     & > div {
       padding: 0 50px;
       margin-bottom: 10px;
+
+      .error-password-message {
+        display: inline-block;
+        margin-top: 10px;
+        color: rgb(248, 104, 104);
+      }
     }
 
     input {

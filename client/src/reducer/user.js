@@ -50,7 +50,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         signUpLoading: false,
-        signUpError: action.error,
+        signUpError: action.data,
       };
     case SIGN_UP_RESET:
       return {
@@ -96,7 +96,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loginLoading: false,
-        loginError: action.error,
+        loginError: action.data,
       };
     case LOG_OUT_REQUEST:
       return {

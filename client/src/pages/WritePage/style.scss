@@ -125,8 +125,13 @@
         display: flex;
         align-items: center;
 
+        a {
+          color: #000;
+        }
+
         span {
           margin-left: 10px;
+          vertical-align: top;
         }
       }
     }

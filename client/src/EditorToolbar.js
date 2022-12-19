@@ -3,7 +3,8 @@ import hljs from 'highlight.js';
 
 import ImageResize from 'quill-image-resize';
 import axios from "axios";
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
+import { useSelector } from "react-redux";
 Quill.register('modules/ImageResize', ImageResize);
 
 // Custom Undo button icon component for Quill editor. You can import it directly
@@ -82,8 +83,9 @@ export const formats = [
 ];
 
 // Quill Toolbar component
-export const QuillToolbar = ({ quillText, setQuillText }) => {
+export const QuillToolbar = ({ quillText, setQuillText, findPost }) => {
   const quillRef = useRef();
+  const { editMode } = useSelector(state => state.post);
 
   const imageHandler = () => {
     const input = document.createElement("input");
@@ -100,7 +102,7 @@ export const QuillToolbar = ({ quillText, setQuillText }) => {
       formData.append('image', file);
   
       try {
-        const result = await axios.post('http://localhost:8080/post/images', formData);
+        const result = await axios.post(`${process.env.REACT_APP_URL}/post/images`, formData);
         console.log('성공 시, 백엔드가 보내주는 데이터', result.data.url);
         const IMG_URL = result.data.url;
   
@@ -139,6 +141,12 @@ const modules = useMemo(() => {
     }
   }
 }, []);
+
+  useEffect(() => {
+    if(findPost) {
+      setQuillText(findPost.content);
+    }
+  }, []);
 
   return (
     <>

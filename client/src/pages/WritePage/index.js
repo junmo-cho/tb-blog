@@ -2,7 +2,9 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { BsArrowBarLeft } from "react-icons/bs";
-import ReactQuill from 'react-quill';
+import { useLocation } from "react-router-dom";
+
+import ReactQuill, { displayName } from 'react-quill';
 import EditorToolbar, { modules, formats } from "../../EditorToolbar";
 import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.core.css'
@@ -11,8 +13,8 @@ import 'react-quill/dist/quill.bubble.css'
 // import "highlight.js/styles/github.css";
 import "highlight.js/styles/atom-one-dark.css";
 import "./style.scss";
-import { ADD_POST_REQUEST, ADD_POST_RESET, ADD_POST_STATE_RESET } from "../../reducer/post";
-import { useNavigate } from "react-router-dom";
+import { ADD_POST_REQUEST, ADD_POST_RESET, ADD_POST_STATE_RESET, EDIT_MODE_OFF, EDIT_POST_REQUEST } from "../../reducer/post";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Quill } from "react-quill";
 import hljs from 'highlight.js';
@@ -58,9 +60,12 @@ const WrietPage = () => {
   const [selected, setSelected] = useState("Category");
   const [quillText, setQuillText] = useState("");
 
-  const { addPostDone } = useSelector(state => state.post);
+  const { addPostDone, editMode } = useSelector(state => state.post);
 
   const navigate = useNavigate();
+
+  const location = useLocation();
+  const findPost = location.state;
 
   const handleSelect = (e) => {
     setSelected(e.target.value);
@@ -73,6 +78,12 @@ const WrietPage = () => {
       return navigate("/", { replace: true });
     }
   }, [addPostDone]);
+
+  useEffect(() => {
+    if(editMode) {
+      setSelected(findPost.category);
+    }
+  }, []);
 
   const onSubmit = (data) => {
     dispatch({
@@ -88,7 +99,26 @@ const WrietPage = () => {
     // console.log(quillText)
 
     console.log(quillText);
+
+    if(findPost) {
+      dispatch({
+        type: EDIT_POST_REQUEST,
+        data: {
+          PostId: findPost.id,
+          category: selected,
+          title: data.title,
+          subTitle: data.subTitle,
+          content: quillText
+        }
+      });
+    }
   };
+
+  const onFocus = () => {
+    dispatch({
+      type: EDIT_MODE_OFF,
+    });
+  }
 
   return (
     <div className="write-container">
@@ -108,23 +138,25 @@ const WrietPage = () => {
           </div>
           <div className="input-area">
             <label htmlFor="title">제목</label>
-            <input id="title" type="title" name="title" placeholder="제목을 입력해 주세요." { ...register("title") } />
+            <input id="title" type="title" name="title" onFocus={onFocus} placeholder="제목을 입력해 주세요." value={editMode ? findPost.title : null } { ...register("title") } />
             <span className="title-line"></span>
           </div>
           <div className="input-area">
             <label htmlFor="subTitle">부제목</label>
-            <input id="subTitle" type="subTitle" name="subTitle" placeholder="부제목을 입력해 주세요." { ...register("subTitle") } />
+            <input id="subTitle" type="subTitle" name="subTitle" onFocus={onFocus} placeholder="부제목을 입력해 주세요." value={editMode ? findPost.subTitle : null } { ...register("subTitle") } />
           </div>
           <div className="input-area content-area">
             {/* <label htmlFor="content">본문</label>
             <textarea id="content" type="content" name="content" placeholder="본문이외다" { ...register("content") } ></textarea> */}
-            <EditorToolbar quillText={quillText} setQuillText={setQuillText} />
+            <EditorToolbar quillText={quillText} setQuillText={setQuillText} findPost={findPost} onFocus={onFocus} />
             {/* <ReactQuill theme="snow" value={quillText} onChange={setQuillText} modules={modules} formats={formats} /> */}
           </div>
           <div className="btn-wrap">
             <button type="button" className="exit">
-              <BsArrowBarLeft /> <span>나가기</span>
-              </button>
+              <Link to="/">
+                <BsArrowBarLeft /> <span>나가기</span>
+              </Link>
+            </button>
             <button type="submit" disabled={isSubmitting} className="completed">완료</button>
           </div>
         </form>

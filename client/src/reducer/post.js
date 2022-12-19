@@ -48,6 +48,10 @@ export const initialState = {
   uploadImagesLoading: false,
   uploadImagesDone: false,
   uploadImagesError: null,
+  editMode: false,
+  editPostLoading: false,
+  editPostDone: false,
+  editPostError: null,
 };
 
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
@@ -72,6 +76,13 @@ export const UPLOAD_IMAGES_REQUEST = 'UPLOAD_IMAGES_REQUEST';
 export const UPLOAD_IMAGES_SUCCESS = 'UPLOAD_IMAGES_SUCCESS';
 export const UPLOAD_IMAGES_FAILURE = 'UPLOAD_IMAGES_FAILURE';
 
+export const EDIT_MODE_ON = 'EDIT_MODE_ON';
+export const EDIT_MODE_OFF = 'EDIT_MODE_OFF';
+
+export const EDIT_POST_REQUEST = 'EDIT_POST_REQUEST';
+export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS';
+export const EDIT_POST_FAILURE = 'EDIT_POST_FAILURE';
+
 // const dummyPost = (data) => ({
 //   id: 4,
 //   category: "Design",
@@ -85,11 +96,6 @@ export const UPLOAD_IMAGES_FAILURE = 'UPLOAD_IMAGES_FAILURE';
 //   date: "2022-11-06",
 //   hashtags: ["#toprank", "#angular", "#양방향바인딩"]
 // });
-
-const dummyComment = (data) => ({
-  id: 1,
-  content: data,
-});
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -202,8 +208,6 @@ const reducer = (state = initialState, action) => {
         uploadImagesError: null,
       };
     case UPLOAD_IMAGES_SUCCESS:
-      console.log(action.data);
-
       return {
         ...state,
         uploadImagesLoading: false,
@@ -215,6 +219,41 @@ const reducer = (state = initialState, action) => {
         ...state,
         uploadImagesLoading: false,
         uploadImagesError: action.error,
+      };
+    case EDIT_MODE_ON:
+      return {
+        ...state,
+        editMode: true,
+      };
+    case EDIT_MODE_OFF:
+      return {
+        ...state,
+        editMode: false,
+      };
+    case EDIT_POST_REQUEST:
+      return {
+        ...state,
+        editPostLoading: true,
+        editPostDone: false,
+        editPostError: null,
+      };
+    case EDIT_POST_SUCCESS:
+      const editPostIndex = state.mainPosts.findIndex((v) => v.id === action.data.PostId);
+      const editPost = { ...state.mainPosts[editPostIndex] };
+      const mainPostsAll = [...state.mainPosts];
+      mainPostsAll[editPostIndex] = action.data;
+      
+      return {
+        ...state,
+        editPostLoading: false,
+        editPostDone: true,
+        mainPostsAll,
+      };
+    case EDIT_POST_FAILURE:
+      return {
+        ...state,
+        editPostLoading: false,
+        editPostError: action.error,
       };
     default:
       return state;
