@@ -8,16 +8,16 @@ const PostCard = ({ postType }) => {
   const dispatch = useDispatch();
   const { removePostDone } = useSelector(state => state.post);
 
-  useEffect(() => {
-    if(removePostDone) {
-      dispatch({
-        type: REMOVE_POST_RESET,
-      });
-      dispatch({
-        type: LOAD_POST_REQUEST,
-      });
-    }
-  }, [removePostDone]);
+  // useEffect(() => {
+  //   if(removePostDone) {
+  //     dispatch({
+  //       type: REMOVE_POST_RESET,
+  //     });
+  //     dispatch({
+  //       type: LOAD_POST_REQUEST,
+  //     });
+  //   }
+  // }, [removePostDone]);
 
   return (
     <>

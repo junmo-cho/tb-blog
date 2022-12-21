@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ADD_COMMENT_REQUEST } from "../../reducer/post";
+import { ADD_COMMENT_REQUEST, REMOVE_COMMENT_REQUEST } from "../../reducer/post";
+import CommentList from "../CommentsList";
 import "./style.scss";
 
 const CommentForm = ({ post }) => {
   const dispatch = useDispatch();
   const [commentText, setCommentText] = useState("");
+  const { addCommentDone } = useSelector(state => state.post);
 
   const onChangeComment = useCallback((e) => {
     setCommentText(e.target.value);
@@ -20,22 +22,25 @@ const CommentForm = ({ post }) => {
     });
   }
 
+  useEffect(() => {
+    if(addCommentDone) {
+      setCommentText("");
+    }
+  }, [addCommentDone]);
+
   return (
     <div className="comment-area">
       <div className="input-area">
         <form onSubmit={onSubmitComment}>
-          <textarea onChange={onChangeComment}></textarea>
+          <textarea onChange={onChangeComment} value={commentText}></textarea>
           <button type="submit" className="comment-done-btn">완료</button>
         </form>
       </div>
       <div className="comment-list-area">
         <ul>
-          { post.Comments.map((comment) => (
-            <li key={comment.id} className="comment-card">
-              <span className="comment-user">{comment.User.nickname}</span>
-              <div className="comment-contents">{comment.content}</div>
-            </li>
-          )) }
+          {post.Comments.map((comment) => (
+            <CommentList key={comment.id} comment={comment} post={post} />
+          ))}
         </ul>
       </div>
     </div>

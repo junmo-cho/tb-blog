@@ -28,7 +28,7 @@ const PostPage = () => {
             <h3 className="detail-title">{ findPost.title }</h3>
             <p className="detail-subtitle">{ findPost.subTitle }</p>
           </div>
-          <button onClick={onClickEdit}>
+          <button onClick={onClickEdit} className="post-edit-btn">
             <Link to="/writePage" state={ findPost }>
               <HiOutlinePencil />
             </Link>

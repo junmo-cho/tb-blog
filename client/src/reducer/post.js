@@ -52,6 +52,12 @@ export const initialState = {
   editPostLoading: false,
   editPostDone: false,
   editPostError: null,
+  removeCommentLoading: false,
+  removeCommentDone: false,
+  removeCommentError: null,
+  eidtCommentLoading: false,
+  eidtCommentDone: false,
+  eidtCommentError: null,
 };
 
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
@@ -78,10 +84,20 @@ export const UPLOAD_IMAGES_FAILURE = 'UPLOAD_IMAGES_FAILURE';
 
 export const EDIT_MODE_ON = 'EDIT_MODE_ON';
 export const EDIT_MODE_OFF = 'EDIT_MODE_OFF';
+export const EDIT_MODE_RESET = 'EDIT_MODE_RESET';
 
 export const EDIT_POST_REQUEST = 'EDIT_POST_REQUEST';
 export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS';
 export const EDIT_POST_FAILURE = 'EDIT_POST_FAILURE';
+
+export const REMOVE_COMMENT_REQUEST = 'REMOVE_COMMENT_REQUEST';
+export const REMOVE_COMMENT_SUCCESS = 'REMOVE_COMMENT_SUCCESS';
+export const REMOVE_COMMENT_FAILURE = 'REMOVE_COMMENT_FAILURE';
+export const REMOVE_COMMENT_RESET = 'REMOVE_COMMENT_RESET';
+
+export const EDIT_COMMENT_REQUEST = 'EDIT_COMMENT_REQUEST';
+export const EDIT_COMMENT_SUCCESS = 'EDIT_COMMENT_SUCCESS';
+export const EDIT_COMMENT_FAILURE = 'EDIT_COMMENT_FAILURE';
 
 // const dummyPost = (data) => ({
 //   id: 4,
@@ -138,7 +154,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         removePostLoading: false,
         removePostDone: true,
-        mainPosts: state.mainPosts.filter((v) => v.id !== action.data),
+        mainPosts: state.mainPosts.filter((v) => v.id !== action.data.PostId),
       };
     case REMOVE_POST_FAILURE:
       return {
@@ -239,10 +255,9 @@ const reducer = (state = initialState, action) => {
       };
     case EDIT_POST_SUCCESS:
       const editPostIndex = state.mainPosts.findIndex((v) => v.id === action.data.PostId);
-      const editPost = { ...state.mainPosts[editPostIndex] };
-      const mainPostsAll = [...state.mainPosts];
+      const mainPostsAll = { ...state.mainPosts };
       mainPostsAll[editPostIndex] = action.data;
-      
+
       return {
         ...state,
         editPostLoading: false,
@@ -254,6 +269,70 @@ const reducer = (state = initialState, action) => {
         ...state,
         editPostLoading: false,
         editPostError: action.error,
+      };
+    case EDIT_MODE_RESET:
+      return {
+        ...state,
+        editPostDone: false,
+      };
+    case REMOVE_COMMENT_REQUEST:
+      return {
+        ...state,
+        removeCommentLoading: true,
+        removeCommentDone: false,
+        removeCommentError: null,
+      };
+    case REMOVE_COMMENT_SUCCESS:
+      const commentPostIndex = state.mainPosts.findIndex((v) => v.id === action.data.PostId);
+      const findPost = { ...state.mainPosts };
+      const findPostComment = [ ...state.mainPosts[commentPostIndex].Comments ];
+      // const findPostCommentIndex = findPostComment.findIndex((v) => v.id === action.data.id);
+      const filterComment = findPostComment.filter((v) => v.id !== action.data.CommentId);
+      findPost[commentPostIndex].Comments = filterComment;
+
+      return {
+        ...state,
+        removeCommentLoading: false,
+        removeCommentDone: true,
+        findPost,
+      };
+    case REMOVE_COMMENT_FAILURE:
+      return {
+        ...state,
+        removeCommentLoading: false,
+        removeCommentError: action.error,
+      };
+    case REMOVE_COMMENT_RESET:
+      return {
+        ...state,
+        removeCommentDone: false,
+      };
+    case EDIT_COMMENT_REQUEST:
+      return {
+        ...state,
+        editCommentLoading: true,
+        editCommentDone: false,
+        editCommentError: null,
+      };
+    case EDIT_COMMENT_SUCCESS:
+      const eidtCommentPostIndex = state.mainPosts.findIndex((v) => v.id === action.data.PostId);
+      const editFindPost = { ...state.mainPosts };
+      const eidtFindPostComment = [ ...state.mainPosts[eidtCommentPostIndex].Comments ];
+      const commentIndex = eidtFindPostComment.findIndex((v) => v.id === action.data.CommentId);
+      eidtFindPostComment[commentIndex].content = action.data.content;
+      editFindPost[eidtCommentPostIndex].Comments = eidtFindPostComment;
+
+      return {
+        ...state,
+        editCommentLoading: false,
+        editCommentDone: true,
+        editFindPost
+      };
+    case EDIT_COMMENT_FAILURE:
+      return {
+        ...state,
+        editCommentLoading: false,
+        editCommentError: action.error,
       };
     default:
       return state;

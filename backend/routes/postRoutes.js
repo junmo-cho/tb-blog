@@ -7,6 +7,7 @@ const { isLoggedIn } = require('./middlewares');
 const path = require('path');
 
 const dotenv = require('dotenv');
+const comment = require('../models/comment');
 
 dotenv.config();
 
@@ -61,13 +62,13 @@ router.post('/', isLoggedIn, async (req, res, next) => {
       where: { id: post.id },
       include: [{
         model: Comment,
-        // include: [{
-        //   model: User,
-        //   attributes: ['id', 'nickname'],
-        // }]
+        include: [{
+          model: User,
+          attributes: ['id', 'nickname'],
+        }]
       }, {
         model: User,
-        // attributes: ['id', 'nickname'],
+        attributes: ['id', 'nickname'],
       }],
     });
 
@@ -112,7 +113,15 @@ router.post('/:postId/comment', isLoggedIn, async (req, res, next) => {
       PostId: parseInt(req.params.postId)
     });
 
-    res.status(201).json(comment);
+    const fullComment = await Comment.findOne({
+      where: { id: comment.id },
+      include: [{
+        model: User,
+        attributes: ['id', 'nickname'],
+      }],
+    });
+
+    res.status(201).json(fullComment);
   } catch (error) {
     console.error(error);
 
@@ -163,6 +172,59 @@ router.delete('/:postId', isLoggedIn, async (req, res, next) => {
     console.error(error);
 
     res.status(500).json({ message: `Server Error ${error}` });
+    next(error);
+  }
+});
+
+router.delete('/:postId/:commentId', isLoggedIn, async (req, res, next) => {
+  try {
+    const comment = await Comment.findOne({ 
+      where: { 
+        PostId: req.params.postId,
+        UserId: req.user.id,
+        id: req.params.commentId,
+      } 
+    });
+    await Comment.destroy({
+      where: {
+        id: comment.id,
+      },
+      include: [{
+        model: User,
+        attributes: ['id', 'nickname'],
+      }],
+    });
+
+    res.status(200).json({ CommentId: comment.id, PostId: parseInt(req.params.postId, 10), UserId: req.user.id });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({ message: `Server Error ${error}` });
+    next(error);
+  }
+});
+
+router.patch('/:postId/:commentId', isLoggedIn, async (req, res, next) => { // PATCH /post/10
+  try {
+    await Comment.update({
+      content: req.body.content,
+      UserId: req.user.id,
+    }, {
+      where: {
+        id: req.params.commentId,
+        PostId: req.params.postId,
+        UserId: req.user.id,
+      },
+    });
+
+    res.status(200).json({ 
+      PostId: parseInt(req.params.postId, 10),
+      CommentId: parseInt(req.params.commentId, 10),
+      content: req.body.content,
+      UserId: req.user.id, 
+    });
+  } catch (error) {
+    console.error(error);
     next(error);
   }
 });

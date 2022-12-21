@@ -13,7 +13,7 @@ import 'react-quill/dist/quill.bubble.css'
 // import "highlight.js/styles/github.css";
 import "highlight.js/styles/atom-one-dark.css";
 import "./style.scss";
-import { ADD_POST_REQUEST, ADD_POST_RESET, ADD_POST_STATE_RESET, EDIT_MODE_OFF, EDIT_POST_REQUEST } from "../../reducer/post";
+import { ADD_POST_REQUEST, ADD_POST_RESET, ADD_POST_STATE_RESET, EDIT_MODE_OFF, EDIT_MODE_RESET, EDIT_POST_REQUEST, LOAD_POST_REQUEST, REMOVE_POST_RESET } from "../../reducer/post";
 import { Link, useNavigate } from "react-router-dom";
 
 import { Quill } from "react-quill";
@@ -60,7 +60,8 @@ const WrietPage = () => {
   const [selected, setSelected] = useState("Category");
   const [quillText, setQuillText] = useState("");
 
-  const { addPostDone, editMode } = useSelector(state => state.post);
+  const { addPostDone, editMode, editPostDone, hasMorePosts, loadPostLoading, mainPosts } = useSelector(state => state.post);
+  const { me } = useSelector(state => state.user);
 
   const navigate = useNavigate();
 
@@ -85,20 +86,25 @@ const WrietPage = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if(editPostDone) {
+      dispatch({
+        type: EDIT_MODE_RESET,
+      });
+
+      dispatch({
+        type: REMOVE_POST_RESET,
+      });
+
+      dispatch({
+        type: LOAD_POST_REQUEST,
+      });
+
+      return navigate("/");
+    }
+  }, [editPostDone]);
+
   const onSubmit = (data) => {
-    dispatch({
-      type: ADD_POST_REQUEST,
-      data: { category: selected, title: data.title, subTitle: data.subTitle, content: quillText }
-    });
-
-    // if(addPostDone) {
-    //   redirect("/");
-    // }
-
-    // console.log(data);
-    // console.log(quillText)
-
-    console.log(quillText);
 
     if(findPost) {
       dispatch({
@@ -111,6 +117,20 @@ const WrietPage = () => {
           content: quillText
         }
       });
+    }else{
+      dispatch({
+        type: ADD_POST_REQUEST,
+        data: { category: selected, title: data.title, subTitle: data.subTitle, content: quillText }
+      });
+  
+      // if(addPostDone) {
+      //   redirect("/");
+      // }
+  
+      // console.log(data);
+      // console.log(quillText)
+  
+      console.log(quillText);
     }
   };
 
